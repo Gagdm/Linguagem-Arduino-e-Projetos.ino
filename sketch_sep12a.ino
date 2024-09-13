@@ -1,4 +1,5 @@
 #include "SemaCar.h"
+#include "SemaPed.h"
 
 /* Definindo LCD 16x2 */
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
@@ -28,4 +29,5 @@ void setup() {
 void loop() {
   // Semaforo para os carros
   sem.SemaCar();
+  semp.SemaPed();
 }

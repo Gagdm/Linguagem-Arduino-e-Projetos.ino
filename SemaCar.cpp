@@ -3,7 +3,7 @@
 /* Variáveis que guardam os ASCII dos caracteres 
               a serem utilizados */
 char SQUARE = S;
-char NOT_SQUARE = NS;
+char ERASE = NS;
 
 //========================================================================================
 
@@ -25,7 +25,12 @@ void Semaphore::handle_green() {
 //----------------------------------------------------------------------------------------
   /* Caso o botão seja apertado, o LED GREEN ficará aceso por mais 15s */
   if (((millis() - millisCarro) < 15000) && (btn_on == true)) {
-    digitalWrite(GREEN, HIGH);
+    if(((millis() - millisCarro) > 5000) && ((millis() - millisCarro) < 5200)) {
+      digitalWrite(GREEN, LOW);
+    }
+    else {
+      digitalWrite(GREEN, HIGH);
+    }
 
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     /* Nos últimos 10s do LED GREEN aceso no ciclo corrente, o LCD 16x2 irá diminuindo 
@@ -44,7 +49,12 @@ void Semaphore::handle_green() {
         }
     }
     else if(((millis() - millisCarro) > 5000) && ((millis() - millisCarro) < 5200)) {
-      lcd.clear();
+      for(int i = 0; i < 10; i++) {
+        lcd.setCursor(i,0);
+        lcd.print(ERASE);
+        lcd.setCursor(i,1);
+        lcd.print(ERASE);
+      }
     }
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,7 +71,10 @@ void Semaphore::handle_green() {
                 quando a condição é atendida, a tela é apagada */
       if(count < take_green) {
         count = take_green;
-        lcd.clear();
+        lcd.setCursor(10 - count, 0);
+        lcd.print(ERASE);
+        lcd.setCursor(10 - count, 1);
+        lcd.print(ERASE);
       }
 
       /* Printa os SQUAREs */
@@ -124,7 +137,12 @@ void Semaphore::handle_red() {
   /* Caso o botão seja apertado e já se passaram 17s (15s LED GREEN + 2s LED YELLOW), 
                               LED RED deve acender */
   if (((millis() - millisCarro) > 17000) && (btn_on == true)) {
-    digitalWrite(RED, HIGH);
+    if(((millis() - millisCarro) > 27400) && ((millis() - millisCarro) < 27600)) {
+      digitalWrite(RED, LOW);
+    }
+    else {
+      digitalWrite(RED, HIGH);
+    }
 
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     /* Nos últimos 10s do LED RED aceso no ciclo corrente, o LCD 16x2 irá diminuindo 
@@ -142,8 +160,13 @@ void Semaphore::handle_red() {
         lcd.print(SQUARE);
       }
     }
-    if(((millis() - millisCarro) > 27000) && ((millis() - millisCarro) < 27200))  {
-      lcd.clear();
+    if(((millis() - millisCarro) > 28000) && ((millis() - millisCarro) < 28200))  {
+      for(int i = 0; i < 10; i++) {
+        lcd.setCursor(i,0);
+        lcd.print(ERASE);
+        lcd.setCursor(i,1);
+        lcd.print(ERASE);
+      }
     }
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,7 +183,10 @@ void Semaphore::handle_red() {
                 quando a condição é atendida, a tela é apagada */
       if(count < take_red) {
         count = take_red;
-        lcd.clear();
+        lcd.setCursor(10 - count, 0);
+        lcd.print(ERASE);
+        lcd.setCursor(10 - count, 1);
+        lcd.print(ERASE);
       }
 
       /* Printa os SQUAREs */
