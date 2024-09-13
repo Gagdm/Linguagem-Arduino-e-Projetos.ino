@@ -5,6 +5,7 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
 /* Instanciação global dos objetos semaforos */
 Semaphore sem;
+SemaphorePed semp;
 
 void setup() {
   // Mapemento dos LEDS
@@ -21,8 +22,7 @@ void setup() {
   // Mapeamento do buzzer
   pinMode(BUZZER, OUTPUT);
 
-  // Inicialização e lcd
-  lcd.begin(16, 2);
+  lcd.begin(16,2);
 }
 
 void loop() {

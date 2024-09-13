@@ -9,12 +9,12 @@
 #define S 255
 #define NS 254
 
-/* Portas dos leds do sinal do transito (Analógico) */
+/* Portas dos leds do semáforo de carros (Analógico) */
 #define RED A5
 #define YELLOW A4
 #define GREEN A3
 
-/* Portas dos leds do sinal de pedestre (Analógico) */
+/* Portas dos leds do semáforo de pedestre (Analógico) */
 #define PED_BLUE A2
 #define PED_RED A1
 #define PED_GREEN A0
@@ -33,9 +33,6 @@
 /* Porta do Buzzer (Digital) */
 #define BUZZER 13
 
-/* Variáveis que guardam os ASCII dos caracteres 
-              a serem utilizados */
-char SQUARE = S;
-char NOT_SQUARE = NS;
+extern LiquidCrystal lcd;
 
 #endif

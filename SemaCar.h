@@ -5,27 +5,27 @@
 
 class Semaphore {
   private: 
-    /* Declarando variáveis que salvarão os millis 
-        necessários nas funções desta classe */
+    /* Declarando variáveis que irão salvar o millis 
+         necessário nas funções desta classe */
     unsigned long millisCarro;
 
     /* Declarando as flags */
     bool btn_on;
     bool restart;
 
-    /* Auxiliar utilizada para definir a quantidade 
+    /* Auxiliar utilizado para definir a quantidade 
         de quadrados a serem printados no LCD */
     int count;
 
-    /* Gerenciam o funcionamento do LEDs do Semaphore */
+    /* Gerenciam o funcionamento do LEDs do semáforo para carros */
     void handle_green();
     void handle_yellow();
     void handle_red();
 
     /* Funções utilizadas para resetar o millis, 
             as flags e os auxiliares */
-    void reset_flags();
-    void restart_sinal_carro();
+    void reset_flags_count();
+    void restart_millisCarro();
 
   public: 
     /* Construtor */
