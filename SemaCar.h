@@ -5,8 +5,8 @@
 
 class Semaphore {
   private: 
-    /* Declarando variáveis que irão salvar o millis 
-         necessário nas funções desta classe */
+    /* Declarando variável que irá salvar o millis 
+        necessário nas funções desta classe */
     unsigned long millisCarro;
 
     /* Declarando as flags */

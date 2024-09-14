@@ -33,6 +33,12 @@
 /* Porta do Buzzer (Digital) */
 #define BUZZER 13
 
+/* Declaração do lcd */
 extern LiquidCrystal lcd;
+
+/* Declaração das variáveis que guardarão o valor dos 
+             caracteres utilizados */
+extern char SQUARE;
+extern char NOT_SQUARE;
 
 #endif

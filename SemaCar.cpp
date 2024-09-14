@@ -1,10 +1,5 @@
 #include "SemaCar.h"
 
-/* Variáveis que guardam os ASCII dos caracteres 
-              a serem utilizados */
-char SQUARE = S;
-char ERASE = NS;
-
 //========================================================================================
 
 /* LED GREEN CONTROL */
@@ -24,7 +19,8 @@ void Semaphore::handle_green() {
 
 //----------------------------------------------------------------------------------------
   /* Caso o botão seja apertado, o LED GREEN ficará aceso por mais 15s */
-  if (((millis() - millisCarro) < 15000) && (btn_on == true)) {
+  if ((btn_on == true) && ((millis() - millisCarro) < 15000)) {
+    /* Quando faltar 10 segundos para o LED GREEN apagar, o mesmo piscará para sinalizar */
     if(((millis() - millisCarro) > 5000) && ((millis() - millisCarro) < 5200)) {
       digitalWrite(GREEN, LOW);
     }
@@ -39,7 +35,7 @@ void Semaphore::handle_green() {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     /*  Antes de 5s a tela do LCD irá se manter inalterada. Passados 5s, o LCD 16x2 
-    piscará e, a partir desse momento, começa-se a decrementar a quantidade de SQUAREs */     
+    piscará , a partir desse momento, começa-se a decrementar a quantidade de SQUAREs */     
     if(((millis() - millisCarro) < 5000) || (((millis() - millisCarro) > 5200) && ((millis() - millisCarro) < 6000))) {
         for(int i = 0; i < 10; i ++) {
           lcd.setCursor(i,0);
@@ -51,9 +47,9 @@ void Semaphore::handle_green() {
     else if(((millis() - millisCarro) > 5000) && ((millis() - millisCarro) < 5200)) {
       for(int i = 0; i < 10; i++) {
         lcd.setCursor(i,0);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
         lcd.setCursor(i,1);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
       }
     }
 
@@ -71,10 +67,12 @@ void Semaphore::handle_green() {
                 quando a condição é atendida, a tela é apagada */
       if(count < take_green) {
         count = take_green;
+
+        /* Apaga-se apenas o SQUARE necessário */
         lcd.setCursor(10 - count, 0);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
         lcd.setCursor(10 - count, 1);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
       }
 
       /* Printa os SQUAREs */
@@ -108,15 +106,17 @@ void Semaphore::handle_yellow() {
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     /* LED YELLOW deve acender, caso o botão tenha sido apertado e, desde a primeira ação, 
     já se passaram 15s (tempo do LED GREEN aceso). Além disso, limpa-se o LCD 16x2 para que 
-    não seja printado nada durante esse estado do semafóro e seta novamente o 'count' como -1, 
+    nada seja printado durante esse estado do semafóro e seta novamente o 'count' como -1, 
     pois o utilizaremos da mesma forma posteriormente, porém, dessa vez, com o LED RED */
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-  /* LED YELLOW ficará aceso por 2s e limpa a tela do LCD 16x2 
-             (para apagar o SQUARE remanescente) */
-  if (((millis() - millisCarro) > 15000) && ((millis() - millisCarro) < 17000) && (btn_on == true)) {
+  /* LED YELLOW ficará aceso por 2s e apaga o SQUARE remanescente */
+  if ((btn_on == true) && ((millis() - millisCarro) > 15000) && ((millis() - millisCarro) < 17000)) {
     digitalWrite(YELLOW, HIGH);
-    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(NOT_SQUARE);
+    lcd.setCursor(0,1);
+    lcd.print(NOT_SQUARE);
     count = -1;
   }
 
@@ -136,8 +136,9 @@ void Semaphore::handle_red() {
 //----------------------------------------------------------------------------------------
   /* Caso o botão seja apertado e já se passaram 17s (15s LED GREEN + 2s LED YELLOW), 
                               LED RED deve acender */
-  if (((millis() - millisCarro) > 17000) && (btn_on == true)) {
-    if(((millis() - millisCarro) > 27400) && ((millis() - millisCarro) < 27600)) {
+  if ((btn_on == true) && ((millis() - millisCarro) > 17000)) {
+    /* Após 28s, o LED RED piscará para sinalizar os último 10s do mesmo aceso */
+    if(((millis() - millisCarro) > 28000) && ((millis() - millisCarro) < 28200)) {
       digitalWrite(RED, LOW);
     }
     else {
@@ -160,12 +161,12 @@ void Semaphore::handle_red() {
         lcd.print(SQUARE);
       }
     }
-    if(((millis() - millisCarro) > 28000) && ((millis() - millisCarro) < 28200))  {
+    else if(((millis() - millisCarro) > 28000) && ((millis() - millisCarro) < 28200))  {
       for(int i = 0; i < 10; i++) {
         lcd.setCursor(i,0);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
         lcd.setCursor(i,1);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
       }
     }
 
@@ -183,10 +184,12 @@ void Semaphore::handle_red() {
                 quando a condição é atendida, a tela é apagada */
       if(count < take_red) {
         count = take_red;
+
+        /* Apaga-se apenas o SQUARE necessário */
         lcd.setCursor(10 - count, 0);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
         lcd.setCursor(10 - count, 1);
-        lcd.print(ERASE);
+        lcd.print(NOT_SQUARE);
       }
 
       /* Printa os SQUAREs */
@@ -202,7 +205,7 @@ void Semaphore::handle_red() {
 
 //----------------------------------------------------------------------------------------
   else {
-    /* Botão foi apertado e ainda não se chegou nos 17s, desde a primeira ação, logo 
+    /* Botão não foi apertado ou ainda não se chegou nos 17s, desde a primeira ação, logo 
           o estado do semáfaro será outro nesse momento (verde ou amarelo), 
                             por isso devemos desliga-lo */
     digitalWrite(RED, LOW);
@@ -263,7 +266,7 @@ void Semaphore::SemaCar() {
                       para que o sistema possa ser reiniciado */
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   
-  /* reseta as flags e o count */
+  /* Reseta as flags e o count */
   if((btn_on == true) && (restart == false) && ((millis() - millisCarro) > 38000)) {
     reset_flags_count();
   } 

@@ -8,8 +8,13 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 Semaphore sem;
 SemaphorePed semp;
 
+/* Variáveis que guardam os ASCII dos caracteres 
+              a serem utilizados */
+char SQUARE = S;
+char NOT_SQUARE = NS;
+
 void setup() {
-  // Mapemento dos LEDS
+  /* Mapemento dos LEDS */
   pinMode(RED, OUTPUT);
   pinMode(YELLOW, OUTPUT);
   pinMode(GREEN, OUTPUT);
@@ -17,17 +22,18 @@ void setup() {
   pinMode(PED_RED, OUTPUT);
   pinMode(PED_GREEN, OUTPUT);
 
-  // Mapeamento do botão
+  /* Mapeamento do botão */
   pinMode(BUTTON, INPUT_PULLUP);
 
-  // Mapeamento do buzzer
+  /* Mapeamento do buzzer */
   pinMode(BUZZER, OUTPUT);
 
+  /* Iicialização do LCD 16x2 */
   lcd.begin(16,2);
 }
 
 void loop() {
-  // Semaforo para os carros
+  /* Chamada dos métodos que gerenciam o funcionamento de cada sinal */
   sem.SemaCar();
   semp.SemaPed();
 }
