@@ -161,7 +161,7 @@ void Semaphore::handle_red() {
         lcd.print(SQUARE);
       }
     }
-    else if(((millis() - millisCarro) > 28000) && ((millis() - millisCarro) < 28200))  {
+    else if(((millis() - millisCarro) > 27000) && ((millis() - millisCarro) < 27200))  {
       for(int i = 0; i < 10; i++) {
         lcd.setCursor(i,0);
         lcd.print(NOT_SQUARE);

@@ -53,7 +53,7 @@ void SemaphorePed::handle_PedGreen() {
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     /* O LED PED_GREEN ficará aceso por 21s, e o take contará quantos segundos já 
           se passaram desde o momento que o LED PED_GREEN acendeu */
-    count = 21;
+    count = 20;
     int take_count = ((millis() - millisPedestre) - 17000) / 1000;
 
     /* Quantos segundos faltam para apagar o LED PED_GREEN */
@@ -148,7 +148,7 @@ void SemaphorePed::controller_Buzzer() {
              fino com uma frequência de 0,5Hz até o LED PED_GREEN apagar 
     - [3] No último segundo de LED PED_GREEN aceso, o Buzzer deve realizar um bip longo 
         e com mesma frequência que [1] por 1s, para sinalizar que o sinal para pedestre 
-                                     está fechando*/
+                                     está fechando */
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,7 +235,7 @@ SemaphorePed::SemaphorePed() {
   forBuzzer = millis();
   btn_on = false;
   restart = true;
-  count = 21;
+  count = 20;
   erase = 22;
 }
 

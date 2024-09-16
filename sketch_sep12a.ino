@@ -1,12 +1,12 @@
-#include "SemaCar.h"
 #include "SemaPed.h"
+#include "SemaCar.h"
 
 /* Definindo LCD 16x2 */
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
 /* Instanciação global dos objetos semaforos */
-Semaphore sem;
 SemaphorePed semp;
+Semaphore sem;
 
 /* Variáveis que guardam os ASCII dos caracteres 
               a serem utilizados */
@@ -34,6 +34,6 @@ void setup() {
 
 void loop() {
   /* Chamada dos métodos que gerenciam o funcionamento de cada sinal */
-  sem.SemaCar();
   semp.SemaPed();
+  sem.SemaCar();
 }
