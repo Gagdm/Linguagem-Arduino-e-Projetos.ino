@@ -28,7 +28,7 @@ class Semaphore {
     void restart_millisCarro();
 
   public: 
-    /* Construtor */
+    /* Construtor (inicialização das variáveis declaradas no private) */
     Semaphore();
 
     /* Função que genrenciará o funcionamento 

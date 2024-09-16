@@ -5,7 +5,7 @@
 #include  <LiquidCrystal.h>
 #include <stdio.h>
 
-/* ASCII de caracteres utilizados */
+/* ASCII de caracteres utilizados no print */
 #define S 255
 #define NS 254
 
@@ -33,7 +33,7 @@
 /* Porta do Buzzer (Digital) */
 #define BUZZER 13
 
-/* Declaração do lcd */
+/* Declaração lcd */
 extern LiquidCrystal lcd;
 
 /* Declaração das variáveis que guardarão o valor dos 

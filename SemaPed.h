@@ -39,7 +39,7 @@ class SemaphorePed {
     void restart_forBuzzer();
 
   public:
-    /* Construtor */
+    /* Construtor  (inicialização das variáveis declaradas no private) */
     SemaphorePed();
 
     /* Função que genrenciará o funcionamento 
