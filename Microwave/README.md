@@ -2,4 +2,5 @@
 
 ## Resumo do projeto
 
-### Funções implementadas
+
+#### Funções a serem implementadas
