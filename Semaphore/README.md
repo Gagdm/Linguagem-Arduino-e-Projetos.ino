@@ -69,5 +69,4 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
  
 ---
 
-
-
+https://github.com/user-attachments/assets/7396706d-8f65-4c85-8035-3ed38b4888be
