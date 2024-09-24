@@ -68,3 +68,6 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
   - O buzzer deverá sinalizar o fechamento do semáforo para pedestre.
  
 ---
+
+
+
