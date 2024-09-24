@@ -26,6 +26,19 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
 
 ## Detalhes de funcionamento
 
+1. O semáforo para carros deverá ficar aberto até que algum pedestre tenha interesse em atravessar a rua, ou seja, apertar o botão;
+2. O semaforo para pedestre deverá permanecer fechado, enquanto existir a possibilidade de transito de carros.
+3. Após o botão ser pressionado, irá iniciar um ciclo de 38s;
+4. Durante o ciclo, os LEDs verde e vermelho, tanto para carros quanto para pedestres, devem piscar para sinalizar os seus últimos 10s de acesso.
+5. O mesmo deverá acontecer com o LCD 16x2;
+6. Após os 38s, o semáforo voltará a seu estado base.
+
+**OBS¹**: _O ciclo não poderá ser reiniciado enquanto um ciclo já estiver em andamento, mesmo que o botão seja pressionado novamente._
+
+**OBS²**: _Toda contagem regressiva relacionada ao semáforo de pedestres é exibida em números decimais._
+
+**OBS³**: _Toda contagem regressiva relacionada ao semáforo para carros é exibida em "barras", simulando um semáforo real._
+
 ### Ciclo:
 
 - ***Após o botão ser apertado (Primeiros 15s):***
@@ -55,16 +68,3 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
   - O buzzer deverá sinalizar o fechamento do semáforo para pedestre.
  
 ---
-
-1. O semáforo para carros deverá ficar aberto até que algum pedestre tenha interesse em atravessar a rua, ou seja, apertar o botão;
-2. O semaforo para pedestre deverá permanecer fechado, enquanto existir a possibilidade de transito de carros.
-3. Após o botão ser pressionado, irá iniciar um ciclo de 38s;
-4. Durante o ciclo, os LEDs verde e vermelho, tanto para carros quanto para pedestres, devem piscar para sinalizar os seus últimos 10s de acesso.
-5. O mesmo deverá acontecer com o LCD 16x2;
-6. Após os 38s, o semáforo voltará a seu estado base.
-
-**OBS¹**: _O ciclo não poderá ser reiniciado enquanto um ciclo já estiver em andamento, mesmo que o botão seja pressionado novamente._
-
-**OBS²**: _Toda contagem regressiva relacionada ao semáforo de pedestres é exibida em números decimais._
-
-**OBS³**: _Toda contagem regressiva relacionada ao semáforo para carros é exibida em "barras", simulando um semáforo real._
