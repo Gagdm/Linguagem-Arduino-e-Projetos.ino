@@ -24,12 +24,47 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
  - [x] 1 Resistor 10kΩ, a depender do tipo do botão utilizado;
  - [x] Fios para a montagem do circuito. 
 
-## Detalhes do funcionamento
+## Detalhes de funcionamento
+
+### Ciclo:
+
+- ***Após o botão ser apertado (Primeiros 15s):***
+  
+  - Nos primeiros 5s, o semáforo se mantem inalterado;
+  - Nos últimos 10s do semáforo aberto para os carros, o LCD 16x2 mostrará uma contagem regressiva.
+
+- ***Após 15s (15-17s):***
+  
+  - O semáforo para carros deverá ficar amarelo por 2 segs;
+  - Note que o semáforo para pedestre deverá continuar fechado.
+ 
+- ***Após 17s (17-38s):***
+  
+  - O semáforo para pedestres deverá estar aberto, enquanto o para carros deverá estar fechado;
+  - O buzzer deverá sinalizar a abertura do trânsito de pedestre;
+  - O LCD deve exibir uma contagem regressiva, com números decimais, para o fechamento do semáforo para pedestres.
+
+  ***Nos últimos 10s do ciclo (28-38s):***
+  
+  - O buzzer deverá tocar a uma frequência de 0,5 Hz para sinalizar que o semáforo de pedestres está prestes a fechar.
+  - O LED azul deverá piscar a uma frequência de 2Hz pelo mesmo motivo;
+  - O LCD, além de continuar a contagem regressiva já mencionada, deverá exibir também uma outra para a abertura do semáforo para carros.
+ 
+  ***No último segundo (37-38s):***
+
+  - O buzzer deverá sinalizar o fechamento do semáforo para pedestre.
+ 
+---
 
 1. O semáforo para carros deverá ficar aberto até que algum pedestre tenha interesse em atravessar a rua, ou seja, apertar o botão;
 2. O semaforo para pedestre deverá permanecer fechado, enquanto existir a possibilidade de transito de carros.
 3. Após o botão ser pressionado, irá iniciar um ciclo de 38s;
-4. Após os 38s, o semáforo voltará a seu estado base.
+4. Durante o ciclo, os LEDs verde e vermelho, tanto para carros quanto para pedestres, devem piscar para sinalizar os seus últimos 10s de acesso.
+5. O mesmo deverá acontecer com o LCD 16x2;
+6. Após os 38s, o semáforo voltará a seu estado base.
 
-### Ciclo:
+**OBS¹**: _O ciclo não poderá ser reiniciado enquanto um ciclo já estiver em andamento, mesmo que o botão seja pressionado novamente._
 
+**OBS²**: _Toda contagem regressiva relacionada ao semáforo de pedestres é exibida em números decimais._
+
+**OBS³**: _Toda contagem regressiva relacionada ao semáforo para carros é exibida em "barras", simulando um semáforo real._
