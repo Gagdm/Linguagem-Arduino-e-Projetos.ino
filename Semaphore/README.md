@@ -1,8 +1,8 @@
 # 🚦Semaphore + Accessibility🚦
 
+![Exemple-circuit](https://github.com/user-attachments/assets/63262d62-951e-4416-9e38-bbca50f7e2c0)
 
-
-
+> Circuio parecido com o que foi utilizado no projeto, modelo feito no Tinkercard.
 ## Resumo do projeto
 
 Projeto com Arduino UNO, utilizando as linguagens C e C++. 
@@ -24,5 +24,12 @@ Projeto com Arduino UNO, utilizando as linguagens C e C++.
  - [x] 1 Resistor 10kΩ, a depender do tipo do botão utilizado;
  - [x] Fios para a montagem do circuito. 
 
-### Ações e ciclos:
+## Detalhes do funcionamento
+
+1. O semáforo para carros deverá ficar aberto até que algum pedestre tenha interesse em atravessar a rua, ou seja, apertar o botão;
+2. O semaforo para pedestre deverá permanecer fechado, enquanto existir a possibilidade de transito de carros.
+3. Após o botão ser pressionado, irá iniciar um ciclo de 38s;
+4. Após os 38s, o semáforo voltará a seu estado base.
+
+### Ciclo:
 
