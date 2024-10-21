@@ -2,105 +2,356 @@
 
 int Manager::turn_off() {
 
-  if(rising_on == true) {
-
-    rising_on = false;
-    return INIT;
-
-  }
-  else {
-
-    rising_off = false;
-    rising_curr = false;
-    press_timer = false;
-    return TURN_OFF;
+  if(rising_on == true) return INIT;
+  else return TURN_OFF;
     
-  }
-  
 }
 
 int Manager::init() {
+
+    if(rising_off == true) return TURN_OFF;
+    else if(rising_on == true) return THIRTY_SECONDS;
+    else if(tecla == 'A') return EASY_MENU;
+    else if(tecla == 'B') return FAN_MENU;
+    else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
+    else if(tecla == '*' || (time_over_blocked == true)) return BLOCKED;
+    else if((three_seconds == NO_PRESSED_FOR_THREE)) {
+        three_seconds = NO_PRESS;
+        return CHOOSE_TIMER;
+    }
+    else if(three_seconds == PRESSED_FOR_THREE) {
+        three_seconds = NO_PRESS;
+        return FIX_CLOCK;
+    }
+    else return INIT;
+    
 
 }
 
 int Manager::init_help() {
 
+    if(rising_off == true) return INIT;
+    else if(rising_on == true) return THIRTY_SECONDS;
+    else if(tecla == 'A') return EASY_MENU;
+    else if(tecla == 'B') return FAN_MENU;
+    else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
+    else if(tecla == '*' || (time_over_blocked == true)) return BLOCKED;
+    else if((three_seconds == NO_PRESSED_FOR_THREE)) {
+        three_seconds = NO_PRESS;
+        return CHOOSE_TIMER;
+    }
+    else if(three_seconds == PRESSED_FOR_THREE) {
+        three_seconds = NO_PRESS;
+        return FIX_CLOCK;
+    }
+    else return INIT_HELP;
+
 }
 
 int Manager::blocked() {
+
+    if((tecla == '*') || (press_open == true)) return INIT;
+    else return BLOCKED;
 
 }
 
 int Manager::fix_clock() {
 
+    if(rising_on == true) {
+        /* NewHour */
+        return INIT;
+    }
+    else if(rising_off == true) {
+        /* OldHour */
+        return INIT;
+    }
+    else return FIX_CLOCK;
+
 }
 
 int Manager::choose_timer() {
 
+    if(rising_on == true) return TIMER;
+    else if(rising_off == true) return INIT;
+    else return CHOOSE_TIMER;
+
 }
 
-int Manager::timer();
+int Manager::timer() {
 
-int Manager::fan_menu();
+    if(rising_on == true || /* time is up */) return INIT;
+    else if(rising_off == true) return CHOOSE_TIMER;
+    else return TIMER;
 
-int Manager::fan_on();
+}
 
-int Manager::fan_off();
+int Manager::fan_menu() {
 
-int Manager::thirty_seconds();
+    if(rising_on == true) return FAN_ON;
+    else if(rising_off == true) return INIT;
+    else return FAN_MENU;
 
-int Manager::choose_time();
+}
 
-int Manager::power_menu();
+int Manager::fan_on() {
 
-int Manager::choose_power();
+    if(/* timer is up */) return INIT;
+    else if((rising_off == true) || (press_open == true)) return FAN_OFF;
+    else return FAN_ON;
 
-int Manager::cooking(); 
+}
 
-int Manager::stopped_cooking();
+int Manager::fan_off() {
 
-int Manager::easy_menu();
+    if((rising_on == true) && (press_open == false)) return FAN_ON;
+    else if(rising_off == true) return INIT;
+    else return FAN_OFF;
 
-int Manager::popcorn_menu();
+}
 
-int Manager::confirm_popcorn();
+int Manager::thirty_seconds() {
 
-int Manager::confirm_mugcake();
+    if(rising_on == true) return COOKING;
+    else if(rising_off = true) return INIT;
+    else if(tecla == 'C') return POWER_MENU;
+    else return THIRTY_SECONDS;
 
-int Manager::confirm_omelet();
+}
 
-int Manager::rice_menu();
+int Manager::choose_time() {
 
-int Manager::confirm_rice();
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return INIT;
+    else if(tecla == 'C') return POWER_MENU;
+    else return CHOOSE_TIME;
 
-int Manager::confirm_brigadeiro();
+}
 
-int Manager::pizza_menu();
+int Manager::power_menu() {
+
+    if(rising_on == true) return CHOOSE_POWER;
+    else if(rising_off == true) return CHOOSE_TIME;
+    else return POWER_MENU;
+
+}
+
+int Manager::choose_power() {
+
+    if(rising_off == true) return POWER_MENU;
+    else if(tecla >= '0' && tecla <= '9') return CHOOSE_TIME;
+    else return CHOOSE_POWER;
+
+}
+
+int Manager::cooking() {
+
+    if(/* time is up */) return INIT;
+    else if((rising_off == true) && (press_open == true)) return STOPPED_COOKING;
+    else return COOKING;
+
+}
+
+int Manager::stopped_cooking() {
+
+    if(rising_off == true) return INIT;
+    else if((rising_on == true) && (press_open == false)) return COOKING;
+    else return STOPPED_COOKING;
+
+}
+
+int Manager::easy_menu() {
+
+    if(rising_off == true) return INIT;
+    else if((rising_on == true) && (index_easy_menu == 0)) return POPCORN_MENU;
+    else if((rising_on == true) && (index_easy_menu == 1)) return CONFIRM_MUGCAKE;
+    else if((rising_on == true) && (index_easy_menu == 2)) return CONFIRM_OMELET;
+    else if((rising_on == true) && (index_easy_menu == 3)) return RICE_MENU;
+    else if((rising_on == true) && (index_easy_menu == 4)) return CONFIRM_BRIGADEIRO;
+    else if((rising_on == true) && (index_easy_menu == 5)) return PIZZA_MENU;
+    else if((rising_on == true) && (index_easy_menu == 6)) return BEANS_MENU;
+    else if((rising_on == true) && (index_easy_menu == 7)) return MEAT_MENU;
+    else if((rising_on == true) && (index_easy_menu == 8)) return CHICKEN_MENU;
+    else if((rising_on == true) && (index_easy_menu == 9)) return LIST_MENU;
+    else return EASY_MENU;
+
+}
+
+int Manager::popcorn_menu() {
+
+    if(rising_off == true) return EASY_MENU;
+    else if((tecla == '1') || (tecla == '2')) return CONFIRM_POPCORN;
+    else return POPCORN_MENU;
+
+}
+
+int Manager::confirm_popcorn() {
+
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return POPCORN_MENU;
+    else return CONFIRM_POPCORN;
+
+}
+
+int Manager::confirm_mugcake() {
+
+    if(rising_on == true) return COOKING;
+    else if(rising_off = true) return EASY_MENU;
+    else return CONFIRM_MUGCAKE;
+
+}
+
+int Manager::confirm_omelet() {
+
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return EASY_MENU;
+    else return CONFIRM_OMELET;
+
+}
+
+int Manager::rice_menu() {
+
+    if(rising_on == true) return CONFIRM_RICE;
+    else if(rising_off == true) return EASY_MENU;
+    else if((tecla == '1') || (tecla == '2')) return CONFIRM_RICE;
+    else return RICE_MENU;
+
+}
+
+int Manager::confirm_rice() {
+
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return RICE_MENU;
+    else return CONFIRM_RICE;
+
+}
+
+int Manager::confirm_brigadeiro() {
+
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return EASY_MENU;
+    else return CONFIRM_BRIGADEIRO;
+
+}
+
+int Manager::pizza_menu() {
+
+    if(rising_off == true) return EASY_MENU;
+    else if((tecla == '1') || (tecla == '2') || (tecla == '3')) return CONFIRM_PIZZA;
+    else return PIZZA_MENU;
+
+}
  
-int Manager::confirm_pizza();
+int Manager::confirm_pizza() {
 
-int Manager::beans_menu();
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return PIZZA_MENU;
+    else return CONFIRM_PIZZA;
 
-int Manager::confirm_beans();
+}
 
-int Manager::meat_menu();
+int Manager::beans_menu() {
 
-int Manager::confirm_meat();
+    if(rising_on == true) return CONFIRM_BEANS;   
+    else if(rising_off == true) return EASY_MENU;
+    else return BEANS_MENU;
+    
+}
 
-int Manager::chicken_menu();
+int Manager::confirm_beans() {
 
-int Manager::confirm_chicken();
+    if(rising_on == true) return COOKING;
+    else if(rising_off == true) return BEANS_MENU;
+    else return CONFIRM_BEANS;
 
-int Manager::thaw_on();
+}
 
-int Manager::thaw_off();
+int Manager::meat_menu() {
 
-int Manager::list_menu();
+    if(rising_on == true) return CONFIRM_MEAT;   
+    else if(rising_off == true) return EASY_MENU;
+    else return MEAT_MENU;
+   
+}
 
-int Manager::list_mode();
+int Manager::confirm_meat() {
+
+    if(rising_on == true) return THAW_ON;
+    else if(rising_off == true) return MEAT_MENU;
+    else return CONFIRM_MEAT;
+
+}
+
+int Manager::chicken_menu() {
+
+    if(rising_on == true) return CONFIRM_CHICKEN;   
+    else if(rising_off == true) return EASY_MENU;
+    else return CHICKEN_MENU;
+
+}
+
+int Manager::confirm_chicken() {
+
+    if(rising_on == true) return THAW_ON;
+    else if(rising_off == true) return CHICKEN_MENU;
+    else return CONFIRM_CHICKEN;
+
+}
+
+int Manager::thaw_on() {
+
+    if( /* timer is up */ ) return INIT;
+    else if( /* timer to turn */ || (press_open == true) || (rising_off == true)) return THAW_OFF;
+    else return THAW_OFF;
+
+}
+
+int Manager::thaw_off() {
+
+    if(rising_off == false) return INIT;
+    else if((press_open == false) && ((rising_on == true) || /* time is up */)) return THAW_ON;
+    else return THAW_OFF;
+
+}
+
+int Manager::list_menu() {
+
+    if(rising_on == true) return LIST_MODE;
+    else if(rising_off == true) return EASY_MENU;
+    else return LIST_MENU;
+
+}
+
+int Manager::list_mode() {
+
+    if(rising_off == true) return LIST_MENU;
+    else return LIST_MODE;
+
+}
+
+void Manager::check_timer() {
+
+    if((press_timer == true) && (down_timer == true) && (check_three == false)) {
+        check_three = true;
+        forThree = millis();
+    }
+    else if((press_timer == false) && ((millis() - forThree) >= 3000) && (down_timer ==  true)) {
+        three_seconds = PRESSED_FOR_THREE;
+        down_timer = false;
+    }
+    else if((press_timer == false) && ((millis() - forThree) < 3000) && (down_timer ==  true)) {
+        three_seconds = NO_PRESSED_FOR_THREE;
+        down_timer = false;
+    }
+
+}
 
 Manager::Manager() {
+
     new_state = TURN_OFF;
+    three_seconds = NO_PRESS;
+    check_three = false;
+    forThree = millis();
+
 }
 
 void Manager::state_maneger() {
@@ -220,5 +471,8 @@ void Manager::state_maneger() {
 
     old_state = state;
     state = new_state;
+
+    rising_on = false;
+    rising_off = false;
 
 }

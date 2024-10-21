@@ -32,42 +32,24 @@ const char TECLAS_MATRIZ[LINHAS][COLUNAS] = {
 };
 
 /* States */
-#define TURN_OFF 0
-#define INIT 1
-#define INIT_HELP 2
-#define BLOCKED 3
-#define FIX_CLOCK 4
-#define CHOOSE_TIMER 5
-#define TIMER 6
-#define FAN_MENU 7
-#define FAN_ON 8
-#define FAN_OFF 9
-#define THIRTY_SECONDS 10
-#define CHOOSE_TIME 11
-#define POWER_MENU 12
-#define CHOOSE_POWER 13
-#define COOKING 14 
-#define STOPPED_COOKING 15
-#define EASY_MENU 16
-#define POPCORN_MENU 17
-#define CONFIRM_POPCORN 18
-#define CONFIRM_MUGCAKE 19
-#define CONFIRM_OMELET 20
-#define RICE_MENU 21
-#define CONFIRM_RICE 22
-#define CONFIRM_BRIGADEIRO 23
-#define PIZZA_MENU 24
-#define CONFIRM_PIZZA 25
-#define BEANS_MENU 26
-#define CONFIRM_BEANS 27
-#define MEAT_MENU 28
-#define CONFIRM_MEAT 29
-#define CHICKEN_MENU 30
-#define CONFIRM_CHICKEN 31
-#define THAW_ON 32
-#define THAW_OFF 33
-#define LIST_MENU 34
-#define LIST_MODE 35
+
+enum states_t {  
+
+  TURN_OFF, INIT, INIT_HELP, BLOCKED, FIX_CLOCK,
+  CHOOSE_TIME, TIMER_E, FAN_MENU, FAN_ON, FAN_OFF,
+  THIRTY_SECONDS, CHOOSE_TIME, POWER_MENU, CHOOSE_POWER,
+  COOKING, STOPPED_COOKING, EASY_MENU, POPCORN_MENU,
+  CONFIRM_POPCORN, CONFIRM_MUGCAKE, CONFIRM_OMELET,
+  RICE_MENU, CONFIRM_RICE, CONFIRM_BRIGADEIRO, PIZZA_MENU,
+  CONFIRM_PIZZA, BEANS_MENU, CONFIRM_BEANS, MEAT_MENU,
+  CONFIRM_MEAT, CHICKEN_MENU, CONFIRM_CHICKEN,
+  THAW_ON, THAW_OFF, LIST_MENU, LIST_MODE     
+
+};
+
+#define NO_PRESS 0
+#define NO_PRESSED_FOR_THREE 1
+#define PRESSED_FOR_THREE 2
 
 const char BottonsMenu[3][15] = { 
   { ' ',' ',' ',' ','B','o','t','o','e','s',' ',' ',' ',' ','\0' },
@@ -96,9 +78,16 @@ extern LiquidCrystal_I2C lcd;
 
 extern int state;
 extern int old_state;
+extern int tecla;
+extern int index_easy_menu;
 
 extern bool rising_on;
 extern bool rising_off;
+extern bool rising_curr;
+extern bool press_open;
+extern bool press_timer;
+extern bool down_timer;
 
+extern bool time_over_blocked;
 
 #endif
