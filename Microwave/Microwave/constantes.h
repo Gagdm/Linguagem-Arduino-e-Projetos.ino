@@ -8,11 +8,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#define CURR 13
-#define OPEN 12
-#define TIMER 11
-#define OFF 10
-#define ON 9
+#define BOUNCE_DURATION 40
+#define OFF 2
+#define TIMER 3
+#define OPEN 18
+#define ON 19
 #define LED 8
 
 const char DOIS_PONTOS = 58;
@@ -20,6 +20,8 @@ const char BOLINHA = 165;
 const char FLORZINHA = 235;
 const char BARRA = 124;
 const char NOT_SQUARE = 254;
+const char ARROW_RIGHT = 128;
+const char ARROW_LEFT = 129;
 
 const byte LINHAS = 4; 
 const byte COLUNAS = 4;
@@ -36,7 +38,7 @@ const char TECLAS_MATRIZ[LINHAS][COLUNAS] = {
 enum states_t {  
 
   TURN_OFF, INIT, INIT_HELP, BLOCKED, FIX_CLOCK,
-  CHOOSE_TIME, TIMER_E, FAN_MENU, FAN_ON, FAN_OFF,
+  CHOOSE_TIMER, TIMER_E, FAN_MENU, FAN_ON, FAN_OFF,
   THIRTY_SECONDS, CHOOSE_TIME, POWER_MENU, CHOOSE_POWER,
   COOKING, STOPPED_COOKING, EASY_MENU, POPCORN_MENU,
   CONFIRM_POPCORN, CONFIRM_MUGCAKE, CONFIRM_OMELET,
@@ -51,26 +53,12 @@ enum states_t {
 #define NO_PRESSED_FOR_THREE 1
 #define PRESSED_FOR_THREE 2
 
-const char BottonsMenu[3][15] = { 
-  { ' ',' ',' ',' ','B','o','t','o','e','s',' ',' ',' ',' ','\0' },
-  { 165,'S','e','l','e','c','t',' ',165,'D','o','o','r',' ','\0' },
-  { 165,'O','f','f',' ',165,'O','n',' ',165,'T','i','m','e','\0' } 
-};
+extern char lcd_tabs_4x15[6][4][15];
 
-const char KeysMenuOne[3][15] = {
-  { ' ',' ',' ',' ','T','e','c','l','a','s',' ',' ',' ',' ','\0' },
-  { ' ',' ',' ',' ','A',58,'M','e','n','u',' ',' ',' ',' ','\0' },
-  { ' ','B',58,'T','i','r','a','r',' ','o','d','o','r',' ','\0' }
-};
+extern char lcd_tabs_4x20[15][4][21];
 
-const char KeysMenuTwo[3][15] = {
-  { ' ',' ','C',58,'P','o','t','e','n','c','i','a',' ',' ','\0' },
-  { ' ',' ','*',58,'B','l','o','q','u','e','a','r',' ',' ','\0' },
-  { ' ',' ',' ',' ','#',58,'M','u','t','e',' ',' ',' ',' ','\0' }
-};
-
-const byte PINOS_LINHAS[LINHAS] = {0, 8, 2, 3}; 
-const byte PINOS_COLUNAS[COLUNAS] = {4, 5, 6, 7}; 
+const byte PINOS_LINHAS[LINHAS] = {45, 44, 43, 42}; 
+const byte PINOS_COLUNAS[COLUNAS] = {41, 40, 39, 38}; 
 
 extern Keypad teclado_personalizado;
 
@@ -78,15 +66,15 @@ extern LiquidCrystal_I2C lcd;
 
 extern int state;
 extern int old_state;
-extern int tecla;
+extern char tecla;
 extern int index_easy_menu;
 
-extern bool rising_on;
-extern bool rising_off;
-extern bool rising_curr;
-extern bool press_open;
-extern bool press_timer;
-extern bool down_timer;
+extern volatile bool rising_on;
+extern volatile bool rising_off;
+extern volatile bool press_open;
+extern volatile bool press_timer;
+extern volatile bool down_timer;
+extern bool test;
 
 extern bool time_over_blocked;
 

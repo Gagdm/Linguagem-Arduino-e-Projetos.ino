@@ -9,6 +9,7 @@ class Manager {
         bool check_three;
         char three_seconds;
         unsigned long forThree;
+        
         int new_state;
 
         int turn_off();

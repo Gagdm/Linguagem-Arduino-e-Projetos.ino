@@ -13,6 +13,7 @@ int Manager::init() {
     else if(rising_on == true) return THIRTY_SECONDS;
     else if(tecla == 'A') return EASY_MENU;
     else if(tecla == 'B') return FAN_MENU;
+    else if(tecla == 'D') return INIT_HELP;
     else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
     else if(tecla == '*' || (time_over_blocked == true)) return BLOCKED;
     else if((three_seconds == NO_PRESSED_FOR_THREE)) {
@@ -79,7 +80,7 @@ int Manager::choose_timer() {
 
 int Manager::timer() {
 
-    if(rising_on == true || /* time is up */) return INIT;
+    if(rising_on == true || test == false) return INIT;
     else if(rising_off == true) return CHOOSE_TIMER;
     else return TIMER;
 
@@ -95,7 +96,7 @@ int Manager::fan_menu() {
 
 int Manager::fan_on() {
 
-    if(/* timer is up */) return INIT;
+    if(test == false) return INIT;
     else if((rising_off == true) || (press_open == true)) return FAN_OFF;
     else return FAN_ON;
 
@@ -112,7 +113,7 @@ int Manager::fan_off() {
 int Manager::thirty_seconds() {
 
     if(rising_on == true) return COOKING;
-    else if(rising_off = true) return INIT;
+    else if(rising_off == true) return INIT;
     else if(tecla == 'C') return POWER_MENU;
     else return THIRTY_SECONDS;
 
@@ -145,7 +146,7 @@ int Manager::choose_power() {
 
 int Manager::cooking() {
 
-    if(/* time is up */) return INIT;
+    if(test == false) return INIT;
     else if((rising_off == true) && (press_open == true)) return STOPPED_COOKING;
     else return COOKING;
 
@@ -195,7 +196,7 @@ int Manager::confirm_popcorn() {
 int Manager::confirm_mugcake() {
 
     if(rising_on == true) return COOKING;
-    else if(rising_off = true) return EASY_MENU;
+    else if(rising_off == true) return EASY_MENU;
     else return CONFIRM_MUGCAKE;
 
 }
@@ -299,8 +300,8 @@ int Manager::confirm_chicken() {
 
 int Manager::thaw_on() {
 
-    if( /* timer is up */ ) return INIT;
-    else if( /* timer to turn */ || (press_open == true) || (rising_off == true)) return THAW_OFF;
+    if( test == false ) return INIT;
+    else if( test == false || (press_open == true) || (rising_off == true)) return THAW_OFF;
     else return THAW_OFF;
 
 }
@@ -308,7 +309,7 @@ int Manager::thaw_on() {
 int Manager::thaw_off() {
 
     if(rising_off == false) return INIT;
-    else if((press_open == false) && ((rising_on == true) || /* time is up */)) return THAW_ON;
+    else if((press_open == false) && ((rising_on == true) || test == false)) return THAW_ON;
     else return THAW_OFF;
 
 }
@@ -375,7 +376,7 @@ void Manager::state_maneger() {
         case CHOOSE_TIMER: 
             new_state = choose_timer(); 
             break;
-        case TIMER: 
+        case TIMER_E: 
             new_state = timer();
             break;
         case FAN_MENU: 
