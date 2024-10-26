@@ -58,17 +58,39 @@ void Interface::init_help() {
       lcd.print(lcd_tabs_4x15[4][i]);
     }
   }
+
 }
 
 void Interface::blocked() {
+
+  for(int i = 0; i < 4; i++) {
+    lcd.setCursor(5,i);
+    lcd.print(BARRA);
+    lcd.print(lcd_tabs_4x15[6][i]);
+  }
 
 }
 
 void Interface::fix_clock() {
 
+  for(int i = 0; i < 4; i++) {
+    lcd.setCursor(5,i);
+    lcd.print(BARRA);
+    lcd.print(lcd_tabs_4x15[5][i]);
+  }
+
 }
 
 void Interface::choose_timer() {
+
+  for(int i = 0; i < 4; i++) {
+    if(i != 2) {
+      lcd.print(lcd_tabs_4x20[0][i]);
+    }
+    else {
+      /* parte do timer */
+    }
+  }
 }
 
 void Interface::timer() {
@@ -76,6 +98,10 @@ void Interface::timer() {
 }
 
 void Interface::fan_menu() {
+
+  for(int i = 0; i < 4; i++) {
+    lcd.print(lcd_tabs_4x20[3][i]);
+  }
 
 }
 
@@ -98,9 +124,17 @@ void Interface::choose_time() {
 
 void Interface::power_menu() {
 
+  for(int i = 0; i < 4; i++) {
+    lcd.print(lcd_tabs_4x20[1][i]);
+  }
+
 }
 
 void Interface::choose_power() {
+
+  for(int i = 0; i < 4; i++) {
+    lcd.print(lcd_tabs_4x20[2][i]);
+  }
 
 }
 
@@ -113,6 +147,26 @@ void Interface::stopped_cooking() {
 }
 
 void Interface::easy_menu() {
+  
+  if(old_state == CONFIRM_MUGCAKE) index_easy_menu = 1;
+  else if(old_state == CONFIRM_OMELET) index_easy_menu = 2;
+  else if(old_state == RICE_MENU) index_easy_menu = 3;
+  else if(old_state == CONFIRM_BRIGADEIRO) index_easy_menu = 4;
+  else if(old_state == PIZZA_MENU) index_easy_menu = 5;
+  else if(old_state == BEANS_MENU) index_easy_menu = 6;
+  else if(old_state == MEAT_MENU) index_easy_menu = 7;
+  else if(old_state == CHICKEN_MENU) index_easy_menu = 8;
+  else if(old_state == LIST_MENU) index_easy_menu = 9;
+  else index_easy_menu = 0;
+
+  for(int i = 0; i < 4; i++) {
+    if(i != 3) {
+      lcd.print(lcd_tabs_4x20[(index_easy_menu + 4)][i]);
+    }
+    else {
+      /* fazer piscar */
+    }
+  }
 
 }
 
