@@ -90,7 +90,7 @@ class Manager {
 
         Manager();
 
-        void state_maneger();
+        void state_manager();
 
 };
 

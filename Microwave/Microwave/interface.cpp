@@ -12,6 +12,8 @@ void Interface::turn_off() {
 
 void Interface::init() {
 
+  clock.show_time();
+
   if(old_state == TURN_OFF) {
     lcd.backlight();
   }
@@ -21,10 +23,29 @@ void Interface::init() {
     lcd.print(BARRA);
     lcd.print(lcd_tabs_4x15[0][i]);
   }
+
+  if((millis() - forHelp) > 60) {
+    forHelp = millis();
+
+    char aux = lcd_tabs_4x15[0][1][0];
+    for(int i = 0; i < 4; i++) {
+      lcd_tabs_4x15[0][1][i] = lcd_tabs_4x15[0][1][i+1];
+    }
+    lcd_tabs_4x15[0][1][4] = aux;
+
+    aux = lcd_tabs_4x15[0][1][13];
+    for(int i = 12; i >= 9; i--) {
+      lcd_tabs_4x15[0][1][i+1] = lcd_tabs_4x15[0][1][i];
+    }
+    lcd_tabs_4x15[0][1][9] = aux;
+
+  }
   
 } 
 
 void Interface::init_help() {
+
+  clock.show_time();
 
   if((millis() - forInit) > 12000) {
     forInit = millis();
@@ -63,6 +84,8 @@ void Interface::init_help() {
 
 void Interface::blocked() {
 
+  clock.show_time();
+
   for(int i = 0; i < 4; i++) {
     lcd.setCursor(5,i);
     lcd.print(BARRA);
@@ -73,10 +96,29 @@ void Interface::blocked() {
 
 void Interface::fix_clock() {
 
+  clock.show_time();
+
   for(int i = 0; i < 4; i++) {
     lcd.setCursor(5,i);
     lcd.print(BARRA);
-    lcd.print(lcd_tabs_4x15[5][i]);
+
+    if((millis() - forBlink) > 300) {
+      forBlink = millis();
+    }
+
+    if(i == 3) {
+      if(clock.get_input() >= 4 && (millis() - forBlink) >= 150) {
+        lcd.print(lcd_tabs_4x15[5][2]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x15[5][i]);
+      }
+    }
+    else {
+        lcd.print(lcd_tabs_4x15[5][i]);
+    }
+    
+
   }
 
 }
@@ -84,12 +126,9 @@ void Interface::fix_clock() {
 void Interface::choose_timer() {
 
   for(int i = 0; i < 4; i++) {
-    if(i != 2) {
-      lcd.print(lcd_tabs_4x20[0][i]);
-    }
-    else {
-      /* parte do timer */
-    }
+    
+    lcd.print(lcd_tabs_4x20[0][i]);
+  
   }
 }
 
@@ -99,8 +138,11 @@ void Interface::timer() {
 
 void Interface::fan_menu() {
 
+  lcd.setCursor(0,0);
+
   for(int i = 0; i < 4; i++) {
     lcd.print(lcd_tabs_4x20[3][i]);
+    lcd.setCursor(0, i+1);
   }
 
 }
@@ -249,10 +291,12 @@ void Interface::list_mode() {
 Interface::Interface() {
 
     forInit = millis();
+    forHelp = millis();
+    forBlink = millis();
 
 }
 
-void Interface::Interface_trustee() {
+void Interface::interface_manager() {
 
   switch(state) {
     case TURN_OFF: 

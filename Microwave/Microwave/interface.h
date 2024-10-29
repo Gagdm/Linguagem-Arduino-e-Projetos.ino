@@ -8,6 +8,8 @@ class Interface {
     private:
 
         unsigned long forInit;
+        unsigned long forHelp;
+        unsigned long forBlink;
         
         void turn_off();
 
@@ -85,7 +87,7 @@ class Interface {
 
         Interface();
 
-        void Interface_trustee();
+        void interface_manager();
 
 };
 

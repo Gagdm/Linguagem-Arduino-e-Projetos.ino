@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #include <stdio.h>
 #include <string.h>
+#include "clock.h"
 
 #define BOUNCE_DURATION 40
 #define OFF 2
@@ -53,9 +54,9 @@ enum states_t {
 #define NO_PRESSED_FOR_THREE 1
 #define PRESSED_FOR_THREE 2
 
-extern char lcd_tabs_4x15[6][4][15];
-
-extern char lcd_tabs_4x20[15][4][21];
+extern char lcd_tabs_4x15[7][4][15];
+extern char lcd_tabs_4x20[30][4][21];
+extern char lcd_clock[5][6];
 
 const byte PINOS_LINHAS[LINHAS] = {45, 44, 43, 42}; 
 const byte PINOS_COLUNAS[COLUNAS] = {41, 40, 39, 38}; 
@@ -74,7 +75,11 @@ extern volatile bool rising_off;
 extern volatile bool press_open;
 extern volatile bool press_timer;
 extern volatile bool down_timer;
+extern volatile bool something_pressed;
 extern bool test;
+
+extern bool mute;
+extern bool block;
 
 extern bool time_over_blocked;
 

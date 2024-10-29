@@ -15,12 +15,16 @@ int Manager::init() {
     else if(tecla == 'B') return FAN_MENU;
     else if(tecla == 'D') return INIT_HELP;
     else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
-    else if(tecla == '*' || (time_over_blocked == true)) return BLOCKED;
+    else if(tecla == '*' || (time_over_blocked == true)) {
+      block = true;
+      return BLOCKED;
+    }
     else if((three_seconds == NO_PRESSED_FOR_THREE)) {
         three_seconds = NO_PRESS;
         return CHOOSE_TIMER;
     }
     else if(three_seconds == PRESSED_FOR_THREE) {
+        clock.set_start_fixing(true);
         three_seconds = NO_PRESS;
         return FIX_CLOCK;
     }
@@ -36,12 +40,16 @@ int Manager::init_help() {
     else if(tecla == 'A') return EASY_MENU;
     else if(tecla == 'B') return FAN_MENU;
     else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
-    else if(tecla == '*' || (time_over_blocked == true)) return BLOCKED;
+    else if(tecla == '*' || (time_over_blocked == true))  {
+      block = true;
+      return BLOCKED;
+    }
     else if((three_seconds == NO_PRESSED_FOR_THREE)) {
         three_seconds = NO_PRESS;
         return CHOOSE_TIMER;
     }
     else if(three_seconds == PRESSED_FOR_THREE) {
+        clock.set_start_fixing(true);
         three_seconds = NO_PRESS;
         return FIX_CLOCK;
     }
@@ -51,21 +59,22 @@ int Manager::init_help() {
 
 int Manager::blocked() {
 
-    if((tecla == '*') || (press_open == true)) return INIT;
+    if((tecla == '*') || (press_open == true)) {
+      time_over_blocked = false;
+      block = false;
+      return INIT;
+    }
     else return BLOCKED;
 
 }
 
 int Manager::fix_clock() {
 
-    if(rising_on == true) {
-        /* NewHour */
-        return INIT;
+    if(rising_off == true) {
+      clock.set_clockHour();
+      return INIT;
     }
-    else if(rising_off == true) {
-        /* OldHour */
-        return INIT;
-    }
+    else if(rising_on == true) return INIT;
     else return FIX_CLOCK;
 
 }
@@ -338,10 +347,12 @@ void Manager::check_timer() {
     else if((press_timer == false) && ((millis() - forThree) >= 3000) && (down_timer ==  true)) {
         three_seconds = PRESSED_FOR_THREE;
         down_timer = false;
+        check_three = false;
     }
     else if((press_timer == false) && ((millis() - forThree) < 3000) && (down_timer ==  true)) {
         three_seconds = NO_PRESSED_FOR_THREE;
         down_timer = false;
+        check_three = false;
     }
 
 }
@@ -355,7 +366,9 @@ Manager::Manager() {
 
 }
 
-void Manager::state_maneger() {
+void Manager::state_manager() {
+
+    check_timer();
 
     switch(state) {
         case TURN_OFF: 
