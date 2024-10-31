@@ -169,10 +169,8 @@ void Interface::fan_on() {
 void Interface::fan_off() {
 
   /* isso */
-  for(int i = 0; i < 20; i++) {
-  
-  }
-  
+ 
+
 }
 
 void Interface::thirty_seconds() {
