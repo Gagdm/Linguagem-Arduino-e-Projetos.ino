@@ -69,6 +69,7 @@ extern int state;
 extern int old_state;
 extern char tecla;
 extern int index_easy_menu;
+extern int index_list;
 
 extern volatile bool rising_on;
 extern volatile bool rising_off;

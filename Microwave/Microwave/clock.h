@@ -15,6 +15,7 @@ class Clock {
     int Old_clockMin;
     int Old_clockHour;
 
+    bool ring;
     bool start_fixing;
     int input;
 
@@ -49,6 +50,16 @@ class Clock {
         void set_clockHour();
 
         int get_input();
+
+        void set_timerMin_Seg(int Min, int Seg);
+
+        bool get_ring();
+
+        bool get_time_is_up();
+
+        void reset_millisTimer();
+
+        void show_timer();
 
 };
 

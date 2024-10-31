@@ -11,6 +11,7 @@ Clock::Clock() {
     Old_clockMin = 0;
     Old_clockHour = 0;
 
+    ring = false;
     start_fixing = false;
     input = 0;
 
@@ -50,19 +51,25 @@ void Clock::microwave_clock() {
 
 void Clock::microwave_timer() {
 
-    if(timerMin == 0 && timerSeg == 0) {
-        timer_is_up = true;
+    if(timerSeg == -3) {
+      ring = false;
+      timer_is_up = true;
     }
     
-    if(timerSeg == -1 && timerMin > 0) {
-        timerSeg = 59;
-        timerMin--;
+    if((millis() - millisTimer) > 1000) {
+      timerSeg--;
+      millisTimer = millis();
     }
 
-    if((millis() - millisTimer) > 1000) {
-        timerSeg--;
-        millisTimer = millis();
+    if(timerSeg == -1 && timerMin > 0) {
+      timerSeg = 59;
+      timerMin--;
     }
+    else if(timerSeg <= 0 && timerMin == 0) {
+      ring = true;
+    }
+
+    show_timer();
 
 }
 
@@ -168,16 +175,17 @@ void Clock::fix_clock() {
 
     switch(input) {
       case 0: 
-        clockHour = (tecla*10)%24;
+        clockHour = tecla;
         break;
       case 1:
-        clockHour = (clockHour+tecla)%24;
+        clockHour = ((clockHour*10)+tecla)%24;
         break;
       case 2:
-        clockMin = (tecla*10)%60;
+        clockMin = tecla;
         break;
       case 3:
-        clockMin = (clockMin+tecla)%60;
+        clockMin = (
+          (clockMin*10)+tecla)%60;
         break;   
     }
     input++;
@@ -199,9 +207,95 @@ void Clock::set_clockHour() {
 
 }
 
+
 int Clock::get_input() {
 
   return input;
   
 }
 
+void Clock::set_timerMin_Seg(int Min, int Seg) {
+
+  timerMin = Min;
+  timerSeg = Seg;
+  
+}
+
+bool Clock::get_ring() {
+
+  return ring;
+
+}
+
+bool Clock::get_time_is_up() {
+
+  return timer_is_up;
+  
+}
+
+void Clock::reset_millisTimer() {
+
+  millisTimer = millis();
+
+}
+
+void Clock::show_timer() {
+
+  if((millis() - forBlink) > 800) {
+
+    forBlink = millis();
+
+  }
+
+  if(ring == false) {
+
+    if(timerMin < 10) {
+
+      lcd_tabs_4x20[28][2][7] = '0';
+      lcd_tabs_4x20[28][2][8] = timerMin + 48;
+
+    }
+    else {
+
+      lcd_tabs_4x20[28][2][7] = (timerMin/10) + 48;
+      lcd_tabs_4x20[28][2][8] = (timerMin%10) + 48;
+
+    }
+
+    lcd_tabs_4x20[28][2][9] = DOIS_PONTOS;
+
+    if(timerSeg < 10) {
+
+      lcd_tabs_4x20[28][2][10] = '0';
+      lcd_tabs_4x20[28][2][11] = timerSeg + 48;
+
+    }    
+    else {
+
+      lcd_tabs_4x20[28][2][10] = (timerSeg/10) + 48;
+      lcd_tabs_4x20[28][2][11] = (timerSeg%10) + 48;
+
+    }
+
+  }
+  else if(ring == true && (millis() - forBlink) >= 600) {
+
+    lcd_tabs_4x20[28][2][7] = ' ';
+    lcd_tabs_4x20[28][2][8] = ' ';
+    lcd_tabs_4x20[28][2][9] = ' ';
+    lcd_tabs_4x20[28][2][10] = ' ';
+    lcd_tabs_4x20[28][2][11] = ' ';
+
+  }
+  else {
+
+  
+    lcd_tabs_4x20[28][2][7] = '0';
+    lcd_tabs_4x20[28][2][8] = '0';
+    lcd_tabs_4x20[28][2][9] = ':';
+    lcd_tabs_4x20[28][2][10] = '0';
+    lcd_tabs_4x20[28][2][11] = '0';
+
+  }
+
+}

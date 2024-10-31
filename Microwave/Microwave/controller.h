@@ -36,24 +36,6 @@ class Controller {
 
     void easy_menu();
 
-    void popcorn_menu();
-
-    void confirm_popcorn();
-
-    void confirm_mugcake();
-
-    void confirm_omelet();
-
-    void rice_menu();
-
-    void confirm_rice();
-
-    void confirm_brigadeiro();
-
-    void pizza_menu();
-
-    void confirm_pizza();
-
     void beans_menu();
 
     void confirm_beans();

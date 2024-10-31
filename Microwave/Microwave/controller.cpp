@@ -7,7 +7,7 @@ void Controller::Controller::block_microwave() {
     something_pressed = false;
   }
 
-  if((millis() - forBlocked) > 60000) {
+  if((millis() - forBlocked) > 90000) {
     time_over_blocked = true;
   }
 
@@ -32,6 +32,8 @@ void Controller::fan_menu() {
 }
 
 void Controller::fan_on() {
+
+  clock.microwave_timer();
 
 }
 
@@ -65,41 +67,9 @@ void Controller::stopped_cooking() {
 
 void Controller::easy_menu() {
 
-}
-
-void Controller::popcorn_menu() {
-
-}
-
-void Controller::confirm_popcorn() {
-
-}
-
-void Controller::confirm_mugcake() {
-
-}
-
-void Controller::confirm_omelet() {
-
-}
-
-void Controller::rice_menu() {
-
-}
-
-void Controller::confirm_rice() {
-
-}
-
-void Controller::confirm_brigadeiro() {
-
-}
-
-void Controller::pizza_menu() {
-
-}
-
-void Controller::confirm_pizza() {
+  if(tecla == 'D') {
+    index_easy_menu = (index_easy_menu+1)%10;
+  }
 
 }
 
@@ -141,6 +111,10 @@ void Controller::list_menu() {
 
 void Controller::list_mode() {
 
+  if(tecla == 'D') {
+    index_list = (index_list+1)%10;
+  }
+
 }
 
 Controller::Controller() {
@@ -150,11 +124,12 @@ Controller::Controller() {
 void Controller::task_manager() {
 
   switch(state) {
+
     /* 
     case TURN_OFF: 
       no action  
-
     */ 
+
     case INIT: 
       block_microwave();
       break;
@@ -165,7 +140,6 @@ void Controller::task_manager() {
     /*
     case BLOCKED: 
       no action
-
     */
     
     case FIX_CLOCK: 
@@ -177,80 +151,82 @@ void Controller::task_manager() {
     case TIMER_E: 
       timer();
       break;
+
+    /*
     case FAN_MENU: 
-      fan_menu(); 
-      break;
+      no action
+    */
+
     case FAN_ON: 
       fan_on(); 
       break;
     case FAN_OFF: 
       fan_off(); 
       break;
+
     case THIRTY_SECONDS: 
       thirty_seconds(); 
       break;
     case CHOOSE_TIME: 
       choose_time(); 
       break;
+
     case POWER_MENU: 
       power_menu(); 
       break;
     case CHOOSE_POWER: 
       choose_power(); 
       break;
+
     case COOKING: 
       cooking(); 
       break;
     case STOPPED_COOKING: 
       stopped_cooking(); 
       break;
+
     case EASY_MENU: 
       easy_menu(); 
       break;
+
+    /*
     case POPCORN_MENU: 
-      popcorn_menu(); 
-      break;
+      no action
     case CONFIRM_POPCORN: 
-      confirm_popcorn(); 
-      break;
+      no action
     case CONFIRM_MUGCAKE: 
-      confirm_mugcake(); 
-      break;
+      no action
     case CONFIRM_OMELET: 
-      confirm_omelet(); 
-      break;
+      no action
     case RICE_MENU: 
-      rice_menu();
-      break;
+      no action
     case CONFIRM_RICE: 
-      confirm_rice(); 
-      break;
+      no action
     case CONFIRM_BRIGADEIRO: 
-      confirm_brigadeiro(); 
-      break;
+      no action
     case PIZZA_MENU:
-      pizza_menu(); 
-      break;
+      no action
     case CONFIRM_PIZZA: 
-      confirm_pizza(); 
-      break;
+      no action
+    */
+
     case BEANS_MENU: 
       beans_menu();
       break;
     case CONFIRM_BEANS: 
-      confirm_beans(); 
+      confirm_beans();
       break;
     case MEAT_MENU: 
-      meat_menu(); 
+      meat_menu();
       break;
     case CONFIRM_MEAT: 
-      confirm_meat(); 
+      confirm_meat();
       break;
     case CHICKEN_MENU: 
-      chicken_menu(); 
+      chicken_menu();
       break;
     case CONFIRM_CHICKEN: 
-      confirm_chicken(); 
+      confirm_chicken();
       break;
     case THAW_ON: 
       thaw_on(); 

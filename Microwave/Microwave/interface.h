@@ -10,6 +10,10 @@ class Interface {
         unsigned long forInit;
         unsigned long forHelp;
         unsigned long forBlink;
+        unsigned long forEffects;
+
+        int chosen;
+        char bolinhas[22];
         
         void turn_off();
 
@@ -83,16 +87,18 @@ class Interface {
 
         void list_mode();
 
+        void effects();
+
     public:
 
         Interface();
 
         void interface_manager();
 
+        void set_chosen(int i);
+
 };
 
-
-
-
+extern Interface interface;
 
 #endif

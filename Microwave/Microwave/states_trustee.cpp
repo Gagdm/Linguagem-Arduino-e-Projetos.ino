@@ -1,4 +1,5 @@
 #include "states_trustee.h"
+#include "interface.h"
 
 int Manager::turn_off() {
 
@@ -97,7 +98,11 @@ int Manager::timer() {
 
 int Manager::fan_menu() {
 
-    if(rising_on == true) return FAN_ON;
+    if(rising_on == true) {
+      clock.set_timerMin_Seg(1, 30);
+      clock.reset_millisTimer();
+      return FAN_ON;
+    }
     else if(rising_off == true) return INIT;
     else return FAN_MENU;
 
@@ -105,8 +110,8 @@ int Manager::fan_menu() {
 
 int Manager::fan_on() {
 
-    if(test == false) return INIT;
-    else if((rising_off == true) || (press_open == true)) return FAN_OFF;
+    if(clock.get_time_is_up() == true) return INIT;
+    if((rising_off == true) || (press_open == true)) return FAN_OFF;
     else return FAN_ON;
 
 }
@@ -155,8 +160,8 @@ int Manager::choose_power() {
 
 int Manager::cooking() {
 
-    if(test == false) return INIT;
-    else if((rising_off == true) && (press_open == true)) return STOPPED_COOKING;
+    //if(test == false) return INIT;
+    if((rising_off == true) && (press_open == true)) return STOPPED_COOKING;
     else return COOKING;
 
 }
@@ -189,7 +194,14 @@ int Manager::easy_menu() {
 int Manager::popcorn_menu() {
 
     if(rising_off == true) return EASY_MENU;
-    else if((tecla == '1') || (tecla == '2')) return CONFIRM_POPCORN;
+    else if(tecla == '1') {
+      interface.set_chosen(1);
+      return CONFIRM_POPCORN;
+    }
+    else if (tecla == '2') {
+      interface.set_chosen(2);
+      return CONFIRM_POPCORN;
+    }
     else return POPCORN_MENU;
 
 }
@@ -222,7 +234,14 @@ int Manager::rice_menu() {
 
     if(rising_on == true) return CONFIRM_RICE;
     else if(rising_off == true) return EASY_MENU;
-    else if((tecla == '1') || (tecla == '2')) return CONFIRM_RICE;
+    else if(tecla == '1') {
+      interface.set_chosen(1);
+      return CONFIRM_RICE;
+    }
+    else if(tecla == '2') {
+      interface.set_chosen(2);
+      return CONFIRM_RICE;
+    }
     else return RICE_MENU;
 
 }
@@ -246,7 +265,18 @@ int Manager::confirm_brigadeiro() {
 int Manager::pizza_menu() {
 
     if(rising_off == true) return EASY_MENU;
-    else if((tecla == '1') || (tecla == '2') || (tecla == '3')) return CONFIRM_PIZZA;
+    else if(tecla == '1') {
+      interface.set_chosen(1);
+      return CONFIRM_PIZZA;
+    }
+    else if(tecla == '2') {
+      interface.set_chosen(2);
+      return CONFIRM_PIZZA;
+    }
+    else if(tecla == '3') {
+      interface.set_chosen(3);
+      return CONFIRM_PIZZA;
+    }
     else return PIZZA_MENU;
 
 }
@@ -333,7 +363,7 @@ int Manager::list_menu() {
 
 int Manager::list_mode() {
 
-    if(rising_off == true) return LIST_MENU;
+    if(rising_off == true) return EASY_MENU;
     else return LIST_MODE;
 
 }

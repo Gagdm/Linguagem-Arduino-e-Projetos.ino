@@ -102,12 +102,8 @@ void Interface::fix_clock() {
     lcd.setCursor(5,i);
     lcd.print(BARRA);
 
-    if((millis() - forBlink) > 300) {
-      forBlink = millis();
-    }
-
     if(i == 3) {
-      if(clock.get_input() >= 4 && (millis() - forBlink) >= 150) {
+      if(clock.get_input() >= 4 && (millis() - forBlink) >= 350) {
         lcd.print(lcd_tabs_4x15[5][2]);
       }
       else {
@@ -138,26 +134,46 @@ void Interface::timer() {
 
 void Interface::fan_menu() {
 
-  lcd.setCursor(0,0);
-
   for(int i = 0; i < 4; i++) {
-    lcd.print(lcd_tabs_4x20[3][i]);
-    lcd.setCursor(0, i+1);
+
+    lcd.setCursor(0, i);
+    if(i == 3 && ((millis() - forBlink) >= 600)) {   
+      lcd.print(lcd_tabs_4x20[29][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[3][i]);
+    }
+
   }
 
 }
 
 void Interface::fan_on() {
 
+  effects();
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if(i == 0 && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[29][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[28][i]);
+    }
+
+  }
+
 }
 
 void Interface::fan_off() {
 
+
 }
 
 void Interface::thirty_seconds() {
-  //lcd.clear();
-  //lcd.noBacklight();
+  
+
 }
 
 void Interface::choose_time() {
@@ -190,7 +206,8 @@ void Interface::stopped_cooking() {
 
 void Interface::easy_menu() {
   
-  if(old_state == CONFIRM_MUGCAKE) index_easy_menu = 1;
+  if(old_state == INIT || old_state == INIT_HELP) index_easy_menu = 0;
+  else if(old_state == CONFIRM_MUGCAKE) index_easy_menu = 1;
   else if(old_state == CONFIRM_OMELET) index_easy_menu = 2;
   else if(old_state == RICE_MENU) index_easy_menu = 3;
   else if(old_state == CONFIRM_BRIGADEIRO) index_easy_menu = 4;
@@ -198,53 +215,216 @@ void Interface::easy_menu() {
   else if(old_state == BEANS_MENU) index_easy_menu = 6;
   else if(old_state == MEAT_MENU) index_easy_menu = 7;
   else if(old_state == CHICKEN_MENU) index_easy_menu = 8;
-  else if(old_state == LIST_MENU) index_easy_menu = 9;
-  else index_easy_menu = 0;
+  else if(old_state == LIST_MENU || old_state == LIST_MODE) index_easy_menu = 9;
+
+  
 
   for(int i = 0; i < 4; i++) {
-    if(i != 3) {
-      lcd.print(lcd_tabs_4x20[(index_easy_menu + 4)][i]);
+
+    lcd.setCursor(0, i);
+    if( ( i == 1 || i == 2) && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
     }
     else {
-      /* fazer piscar */
+      lcd.print(lcd_tabs_4x20[(index_easy_menu + 4)][i]);
     }
+    
   }
 
 }
 
 void Interface::popcorn_menu() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if( (i == 1 || i == 2) && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[14][i]);
+    }
+
+  }
+
 }
 
 void Interface::confirm_popcorn() {
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[4][2]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[14][chosen]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+         lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[28][0]);      
+    }
+
+  }
 
 }
 
 void Interface::confirm_mugcake() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+
+    if(i == 1) {
+      lcd.print(lcd_tabs_4x20[5][2]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+        lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else lcd.print(lcd_tabs_4x20[28][0]);
+  }
+
 }
 
 void Interface::confirm_omelet() {
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    
+    if(i == 1) {
+      lcd.print(lcd_tabs_4x20[6][2]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+        lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else lcd.print(lcd_tabs_4x20[28][0]);
+  }
 
 }
 
 void Interface::rice_menu() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if( (i == 1 || i == 2) && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[15][i]);
+    }
+
+  }
 }
 
 void Interface::confirm_rice() {
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[7][2]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[15][chosen]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+         lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[28][0]);      
+    }
+  }
 
 }
 
 void Interface::confirm_brigadeiro() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    
+    if(i == 1) {
+      lcd.print(lcd_tabs_4x20[8][2]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+        lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else lcd.print(lcd_tabs_4x20[28][0]);
+  }
+
 }
 
 void Interface::pizza_menu() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if( (i == 1 || i == 2 || i == 3) && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[16][i]);
+    }
+
+  }
+
 }
 
 void Interface::confirm_pizza() {
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[9][2]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[16][chosen]);
+    }
+    else if(i == 3) {
+      if((millis() - forBlink) < 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      } 
+      else {
+         lcd.print(lcd_tabs_4x20[28][0]);
+      }
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[28][0]);      
+    }
+  }
 
 }
 
@@ -282,10 +462,77 @@ void Interface::thaw_off() {
 
 void Interface::list_menu() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if( ( i == 3) && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[17][i]);
+    }
+
+  }
+
 }
 
 void Interface::list_mode() {
 
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if(i == 3 && (millis() - forBlink) >= 600) {
+      lcd.print(lcd_tabs_4x20[28][0]);
+    } 
+    else {
+      lcd.print(lcd_tabs_4x20[index_list+18][i]);
+    }
+  }
+}
+
+void Interface::effects() {
+
+  if((millis() - forEffects) > 45) {
+
+    char aux = bolinhas[0];
+    for(int i = 0; i < 21; i++) {
+      bolinhas[i] = bolinhas[i+1];
+    }
+    bolinhas[21] = aux;
+    
+    forEffects = millis();
+  }
+
+  for(int i = 0; i < 22; i++) {
+
+    switch(i) {
+
+      case 0: lcd_tabs_4x20[28][3][14]  = bolinhas[0];
+      case 1: lcd_tabs_4x20[28][3][13]  = bolinhas[1];
+      case 2: lcd_tabs_4x20[28][3][12]  = bolinhas[2];
+      case 3: lcd_tabs_4x20[28][3][11]  = bolinhas[3];
+      case 4: lcd_tabs_4x20[28][3][10]  = bolinhas[4];
+      case 5: lcd_tabs_4x20[28][3][9]   = bolinhas[5];
+      case 6: lcd_tabs_4x20[28][3][8]   = bolinhas[6];
+      case 7: lcd_tabs_4x20[28][3][7]   = bolinhas[7];
+      case 8: lcd_tabs_4x20[28][3][6]   = bolinhas[8];
+      case 9: lcd_tabs_4x20[28][3][5]   = bolinhas[9];
+      case 10: lcd_tabs_4x20[28][2][5]  = bolinhas[10];
+      case 11: lcd_tabs_4x20[28][1][5]  = bolinhas[11];
+      case 12: lcd_tabs_4x20[28][1][6]  = bolinhas[12];
+      case 13: lcd_tabs_4x20[28][1][7]  = bolinhas[13];
+      case 14: lcd_tabs_4x20[28][1][8]  = bolinhas[14];
+      case 15: lcd_tabs_4x20[28][1][9]  = bolinhas[15];
+      case 16: lcd_tabs_4x20[28][1][10] = bolinhas[16];
+      case 17: lcd_tabs_4x20[28][1][11] = bolinhas[17];
+      case 18: lcd_tabs_4x20[28][1][12] = bolinhas[18];
+      case 19: lcd_tabs_4x20[28][1][13] = bolinhas[19];
+      case 20: lcd_tabs_4x20[28][1][14] = bolinhas[20];
+      case 21: lcd_tabs_4x20[28][2][14] = bolinhas[21];
+
+    }
+  }
+  
 }
 
 Interface::Interface() {
@@ -293,6 +540,18 @@ Interface::Interface() {
     forInit = millis();
     forHelp = millis();
     forBlink = millis();
+    forEffects = millis();
+
+    chosen = 0;
+
+    for(int i = 0; i < 22; i++) {
+      if(i < 12) {
+        bolinhas[i] = BOLINHA;
+      }
+      else {
+        bolinhas[i] = ' ';
+      }
+    }
 
 }
 
@@ -410,5 +669,15 @@ void Interface::interface_manager() {
     default:
       turn_off();
   }
+
+  if((millis() - forBlink) > 800) {
+    forBlink = millis();
+  }
+
+}
+
+void Interface::set_chosen(int i) {
+
+  chosen = i;
 
 }
