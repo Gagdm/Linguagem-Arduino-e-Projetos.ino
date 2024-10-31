@@ -172,8 +172,8 @@ void Interface::fan_off() {
 }
 
 void Interface::thirty_seconds() {
+  /* hj */
   
-
 }
 
 void Interface::choose_time() {
@@ -185,8 +185,8 @@ void Interface::power_menu() {
   for(int i = 0; i < 4; i++) {
     lcd.print(lcd_tabs_4x20[1][i]);
   }
-
 }
+
 
 void Interface::choose_power() {
 
