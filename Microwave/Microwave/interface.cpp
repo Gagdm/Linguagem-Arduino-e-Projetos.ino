@@ -167,8 +167,6 @@ void Interface::fan_on() {
 }
 
 void Interface::fan_off() {
-
-  /* isso */
  
 
 }
