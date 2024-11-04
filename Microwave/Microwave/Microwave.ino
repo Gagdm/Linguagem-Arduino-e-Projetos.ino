@@ -66,9 +66,10 @@ void loop() {
   }
   
   manager.state_manager();
-  Serial.println(state);
+  Serial.println(clock.get_timerSeg());
   
   controller.task_manager();
   interface.interface_manager();
+  
   
 }

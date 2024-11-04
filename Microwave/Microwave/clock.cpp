@@ -214,6 +214,7 @@ int Clock::get_input() {
   
 }
 
+
 void Clock::set_timerMin_Seg(int Min, int Seg) {
 
   timerMin = Min;
@@ -226,17 +227,58 @@ bool Clock::get_ring() {
   return ring;
 
 }
+void Clock::set_ring(bool value) {
+  ring = value;
+}
 
-bool Clock::get_time_is_up() {
+bool Clock::get_timer_is_up() {
 
   return timer_is_up;
   
+}
+
+void Clock::set_timer_is_up(bool value) {
+
+  timer_is_up = value;
+
+}
+
+bool Clock::get_timer_on() {
+
+  return timer_on;
+
+}
+
+void Clock::set_timer_on(bool value) {
+
+  timer_on = value;
+
+}
+
+void Clock::set_timerSeg(int value) {
+
+  timerSeg = value;
+
+}
+
+void Clock::set_timerMin(int value) {
+
+  timerMin = value;
+
 }
 
 void Clock::reset_millisTimer() {
 
   millisTimer = millis();
 
+}
+
+int Clock::get_timerSeg() {
+  return timerSeg;
+}
+
+int Clock::get_timerMin() {
+  return timerMin;
 }
 
 void Clock::show_timer() {

@@ -2,6 +2,7 @@
 #define INTERFACE_H
 
 #include "constantes.h"
+#include "controller.h"
 
 
 class Interface {

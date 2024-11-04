@@ -21,13 +21,38 @@ void Controller::fix_clock() {
 
 void Controller::choose_timer() {
 
+  if(input == 0) {
+    clock.set_timerSeg(0);
+    clock.set_timerMin(0);    
+  }
+
+  if(tecla >= '0' && tecla <= '9') {
+    input++;
+
+    switch(input) {
+      case 1:
+        clock.set_timerMin(tecla-48);
+        break;
+
+      case 2:
+        clock.set_timerMin(((clock.get_timerMin()*10)+(tecla-48))%60);
+        break;
+
+      case 3: 
+        clock.set_timerSeg(tecla-48);
+        break;
+
+      case 4: 
+        clock.set_timerSeg(((clock.get_timerSeg()*10)+(tecla-48))%60);
+        break;
+    }
+  }
+
 }
 
 void Controller::timer() {
 
-}
-
-void Controller::fan_menu() {
+  clock.microwave_timer();
 
 }
 
@@ -37,11 +62,16 @@ void Controller::fan_on() {
 
 }
 
-void Controller::fan_off() {
-
-}
-
 void Controller::thirty_seconds() {
+
+  if(rising_on == true) {
+    clock.set_timerSeg(clock.get_timerSeg() + 30);
+  }
+
+  if(clock.get_timerSeg() == 60) {
+    clock.set_timerSeg(0);
+    clock.set_timerMin(clock.get_timerMin() + 1);
+  }
 
 }
 
@@ -148,7 +178,7 @@ void Controller::task_manager() {
     case CHOOSE_TIMER: 
       choose_timer(); 
       break;
-    case TIMER_E: 
+    case TIMEr_E: 
       timer();
       break;
 
@@ -160,9 +190,11 @@ void Controller::task_manager() {
     case FAN_ON: 
       fan_on(); 
       break;
+
+    /*
     case FAN_OFF: 
-      fan_off(); 
-      break;
+      no action
+    */
 
     case THIRTY_SECONDS: 
       thirty_seconds(); 
@@ -243,3 +275,13 @@ void Controller::task_manager() {
       
   }
 }
+
+void Controller::set_input(int value) {
+
+  input = value;
+
+}
+
+ int Controller::get_input() {
+   return input;
+ }

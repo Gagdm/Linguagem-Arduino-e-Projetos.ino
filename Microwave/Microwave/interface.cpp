@@ -122,13 +122,73 @@ void Interface::fix_clock() {
 void Interface::choose_timer() {
 
   for(int i = 0; i < 4; i++) {
+    lcd.setCursor(0, i);
+    if(i == 3) {
+      if(controller.get_input() >= 4 && (millis() - forBlink) >= 600) {
+        lcd.print(lcd_tabs_4x20[29][0]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x20[0][i]);        
+      }
+    }
+    else if(i == 2) {
+      if(controller.get_input() < 4 && (millis() - forBlink) >= 600) {
+        lcd.print(lcd_tabs_4x20[29][0]);
+      }
+      else {
+      
+        if(clock.get_timerMin() < 10) {
+          lcd_tabs_4x20[0][2][7] = '0';
+          lcd_tabs_4x20[0][2][8] = clock.get_timerMin() + 48;
+        }
+        else {
+          lcd_tabs_4x20[0][2][7] = (clock.get_timerMin()/10) + 48;
+          lcd_tabs_4x20[0][2][8] = (clock.get_timerMin()%10) + 48;
+        }
+
+        lcd_tabs_4x20[0][2][9] = ':';
+
+        if(clock.get_timerSeg() < 10) {
+          lcd_tabs_4x20[0][2][10] = '0';
+          lcd_tabs_4x20[0][2][11] = clock.get_timerSeg() + 48;
+        }
+        else {
+          lcd_tabs_4x20[0][2][10] = (clock.get_timerSeg()/10) + 48;
+          lcd_tabs_4x20[0][2][11] = (clock.get_timerSeg()%10) + 48;
+        }
     
-    lcd.print(lcd_tabs_4x20[0][i]);
-  
+
+        lcd.print(lcd_tabs_4x20[0][i]);
+
+      }
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[0][i]);
+    }
   }
+
 }
 
 void Interface::timer() {
+  
+  effects();
+
+  for(int i = 0; i < 4; i++) {
+
+    lcd.setCursor(0, i);
+    if(i == 0) {   
+      if((millis() - forBlink) >= 600) {
+        lcd.print(lcd_tabs_4x20[29][0]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x20[0][i]);
+      }
+    }
+    else {
+      lcd.print(lcd_tabs_4x20[28][i]);
+    }
+
+  }
 
 }
 
@@ -167,8 +227,29 @@ void Interface::fan_on() {
 }
 
 void Interface::fan_off() {
- 
 
+  if(press_open == true) {
+    for(int i = 0; i < 4; i++) {
+      lcd.setCursor(0, i);
+      if(i == 0) {
+        lcd.print(lcd_tabs_4x20[30][0]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x20[28][i]);
+      }  
+    }
+  }
+  else {
+    for(int i = 0; i < 4; i++) {
+      lcd.setCursor(0, i);
+      if(i == 3) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x20[28][i+1]);
+      }
+    }
+  }
 }
 
 void Interface::thirty_seconds() {
@@ -576,7 +657,7 @@ void Interface::interface_manager() {
     case CHOOSE_TIMER: 
       choose_timer(); 
       break;
-    case TIMER_E: 
+    case TIMEr_E: 
       timer();
       break;
     case FAN_MENU: 

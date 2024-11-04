@@ -21,8 +21,8 @@ const char BOLINHA = 165;
 const char FLORZINHA = 235;
 const char BARRA = 124;
 const char NOT_SQUARE = 254;
-const char ARROW_RIGHT = 128;
-const char ARROW_LEFT = 129;
+const char ARROW_RIGHT = 126;
+const char ARROW_LEFT = 127;
 
 const byte LINHAS = 4; 
 const byte COLUNAS = 4;
@@ -39,7 +39,7 @@ const char TECLAS_MATRIZ[LINHAS][COLUNAS] = {
 enum states_t {  
 
   TURN_OFF, INIT, INIT_HELP, BLOCKED, FIX_CLOCK,
-  CHOOSE_TIMER, TIMER_E, FAN_MENU, FAN_ON, FAN_OFF,
+  CHOOSE_TIMER, TIMEr_E, FAN_MENU, FAN_ON, FAN_OFF,
   THIRTY_SECONDS, CHOOSE_TIME, POWER_MENU, CHOOSE_POWER,
   COOKING, STOPPED_COOKING, EASY_MENU, POPCORN_MENU,
   CONFIRM_POPCORN, CONFIRM_MUGCAKE, CONFIRM_OMELET,
@@ -55,7 +55,7 @@ enum states_t {
 #define PRESSED_FOR_THREE 2
 
 extern char lcd_tabs_4x15[7][4][15];
-extern char lcd_tabs_4x20[30][4][21];
+extern char lcd_tabs_4x20[31][4][21];
 extern char lcd_clock[5][6];
 
 const byte PINOS_LINHAS[LINHAS] = {45, 44, 43, 42}; 

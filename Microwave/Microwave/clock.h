@@ -21,7 +21,6 @@ class Clock {
 
     unsigned long forBlink;
 
-
     unsigned long millisTimer;
 
     int timerSeg;
@@ -29,8 +28,6 @@ class Clock {
 
     bool timer_is_up;
     bool timer_on;
-
-    
 
     public:
 
@@ -55,7 +52,23 @@ class Clock {
 
         bool get_ring();
 
-        bool get_time_is_up();
+        void set_ring(bool value);
+
+        bool get_timer_is_up();
+
+        void set_timer_is_up(bool value);
+
+        bool get_timer_on();
+
+        void set_timerSeg(int value);
+
+        void set_timerMin(int value);
+
+        int get_timerSeg();
+
+        int get_timerMin();
+
+        void set_timer_on(bool value);
 
         void reset_millisTimer();
 

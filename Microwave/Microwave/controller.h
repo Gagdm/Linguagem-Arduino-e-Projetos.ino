@@ -8,6 +8,8 @@ class Controller {
 
     unsigned long forBlocked;
 
+    int input;
+
     void block_microwave();
 
     void fix_clock();
@@ -16,11 +18,7 @@ class Controller {
 
     void timer();
 
-    void fan_menu();
-
     void fan_on();
-
-    void fan_off();
 
     void thirty_seconds();
 
@@ -62,6 +60,12 @@ class Controller {
 
     void task_manager();
 
+    void set_input(int value);
+
+    int get_input();
+
 };
+
+extern Controller controller;
 
 #endif

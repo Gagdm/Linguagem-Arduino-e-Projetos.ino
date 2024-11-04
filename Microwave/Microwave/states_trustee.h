@@ -2,6 +2,7 @@
 #define STATES_TRUSTEE_H
 
 #include "constantes.h"
+#include "controller.h"
 
 class Manager {
     private:
