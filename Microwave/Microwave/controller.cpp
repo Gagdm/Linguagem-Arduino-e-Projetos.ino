@@ -75,7 +75,7 @@ void Controller::block_microwave() {
     digitalWrite(LED_DOOR, LOW);
   }
 
-  if((tecla) || something_pressed == true) {
+  if((tecla) || something_pressed == true || (state != INIT && state != INIT_HELP)) {
     forBlocked = millis();
   }
 
@@ -180,17 +180,22 @@ void Controller::beans_menu() {
     gramas = 0;
   }
 
-  switch(input) {
-    case 0:
-      gramas = (gramas + teclas) - 48;
-      break;
-    case 1:
-      gramas = (gramas*10) + (teclas - 48);
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
+  if(tecla >= '0' && tecla <= '9') {
+    input++;
+    switch(input) {
+      case 1:
+        gramas = (gramas + tecla) - 48;
+        break;
+      case 2:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 3:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 4:
+        gramas = ((gramas*10) + (tecla - 48) > 2000) ? 2000 : (gramas*10) + (tecla - 48);
+        break;
+    }
   }
 }
 
@@ -199,7 +204,27 @@ void Controller::confirm_beans() {
 }
 
 void Controller::meat_menu() {
+   if(input == 0) {
+    gramas = 0;
+  }
 
+  if(tecla >= '0' && tecla <= '9') {
+    input++;
+    switch(input) {
+      case 1:
+        gramas = (gramas + tecla) - 48;
+        break;
+      case 2:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 3:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 4:
+        gramas = ((gramas*10) + (tecla - 48) > 2000) ? 2000 : (gramas*10) + (tecla - 48);
+        break;
+    }
+  }
 }
 
 void Controller::confirm_meat() {
@@ -207,7 +232,27 @@ void Controller::confirm_meat() {
 }
 
 void Controller::chicken_menu() {
+   if(input == 0) {
+    gramas = 0;
+  }
 
+  if(tecla >= '0' && tecla <= '9') {
+    input++;
+    switch(input) {
+      case 1:
+        gramas = (gramas + tecla) - 48;
+        break;
+      case 2:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 3:
+        gramas = (gramas*10) + (tecla - 48);
+        break;
+      case 4:
+        gramas = ((gramas*10) + (tecla - 48) > 2000) ? 2000 : (gramas*10) + (tecla - 48);
+        break;
+    }
+  }
 }
 
 void Controller::confirm_chicken() {

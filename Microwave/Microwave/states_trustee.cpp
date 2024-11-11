@@ -205,9 +205,18 @@ int Manager::easy_menu() {
     else if((rising_on == true) && (index_easy_menu == 3)) return RICE_MENU;
     else if((rising_on == true) && (index_easy_menu == 4)) return CONFIRM_BRIGADEIRO;
     else if((rising_on == true) && (index_easy_menu == 5)) return PIZZA_MENU;
-    else if((rising_on == true) && (index_easy_menu == 6)) return BEANS_MENU;
-    else if((rising_on == true) && (index_easy_menu == 7)) return MEAT_MENU;
-    else if((rising_on == true) && (index_easy_menu == 8)) return CHICKEN_MENU;
+    else if((rising_on == true) && (index_easy_menu == 6)) {
+      controller.set_input(0);
+      return BEANS_MENU;
+    }
+    else if((rising_on == true) && (index_easy_menu == 7)) {
+      controller.set_input(0);
+      return MEAT_MENU;
+    }
+    else if((rising_on == true) && (index_easy_menu == 8)) {
+      controller.set_input(0);
+      return CHICKEN_MENU;
+    }
     else if((rising_on == true) && (index_easy_menu == 9)) return LIST_MENU;
     else return EASY_MENU;
 
@@ -313,10 +322,7 @@ int Manager::confirm_pizza() {
 
 int Manager::beans_menu() {
 
-    if(rising_on == true) {
-      controller.set_input(0);
-      return CONFIRM_BEANS;  
-    } 
+    if(rising_on == true) return CONFIRM_BEANS;  
     else if(rising_off == true) return EASY_MENU;
     else return BEANS_MENU;
     
