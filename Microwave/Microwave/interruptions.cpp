@@ -42,8 +42,6 @@ void off_up() {
 /* apertado = true, n apertado = false */
 void door_signal() {
 
-  something_pressed = true;
-
   if(millis() > bounceTime_OPEN) {
     press_open = !press_open;
     bounceTime_OPEN = millis() + BOUNCE_DURATION;

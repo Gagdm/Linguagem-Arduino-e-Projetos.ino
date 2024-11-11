@@ -304,7 +304,7 @@ void Interface::easy_menu() {
 
     lcd.setCursor(0, i);
     if( ( i == 1 || i == 2) && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     }
     else {
       lcd.print(lcd_tabs_4x20[(index_easy_menu + 4)][i]);
@@ -320,7 +320,7 @@ void Interface::popcorn_menu() {
 
     lcd.setCursor(0, i);
     if( (i == 1 || i == 2) && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     }
     else {
       lcd.print(lcd_tabs_4x20[14][i]);
@@ -347,11 +347,11 @@ void Interface::confirm_popcorn() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-         lcd.print(lcd_tabs_4x20[28][0]);
+         lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
     else {
-      lcd.print(lcd_tabs_4x20[28][0]);      
+      lcd.print(lcd_tabs_4x20[29][0]);      
     }
 
   }
@@ -372,10 +372,10 @@ void Interface::confirm_mugcake() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-        lcd.print(lcd_tabs_4x20[28][0]);
+        lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
-    else lcd.print(lcd_tabs_4x20[28][0]);
+    else lcd.print(lcd_tabs_4x20[29][0]);
   }
 
 }
@@ -394,10 +394,10 @@ void Interface::confirm_omelet() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-        lcd.print(lcd_tabs_4x20[28][0]);
+        lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
-    else lcd.print(lcd_tabs_4x20[28][0]);
+    else lcd.print(lcd_tabs_4x20[29][0]);
   }
 
 }
@@ -408,7 +408,7 @@ void Interface::rice_menu() {
 
     lcd.setCursor(0, i);
     if( (i == 1 || i == 2) && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     }
     else {
       lcd.print(lcd_tabs_4x20[15][i]);
@@ -434,11 +434,11 @@ void Interface::confirm_rice() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-         lcd.print(lcd_tabs_4x20[28][0]);
+         lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
     else {
-      lcd.print(lcd_tabs_4x20[28][0]);      
+      lcd.print(lcd_tabs_4x20[29][0]);      
     }
   }
 
@@ -458,10 +458,10 @@ void Interface::confirm_brigadeiro() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-        lcd.print(lcd_tabs_4x20[28][0]);
+        lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
-    else lcd.print(lcd_tabs_4x20[28][0]);
+    else lcd.print(lcd_tabs_4x20[29][0]);
   }
 
 }
@@ -472,7 +472,7 @@ void Interface::pizza_menu() {
 
     lcd.setCursor(0, i);
     if( (i == 1 || i == 2 || i == 3) && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     }
     else {
       lcd.print(lcd_tabs_4x20[16][i]);
@@ -499,17 +499,34 @@ void Interface::confirm_pizza() {
         lcd.print(lcd_tabs_4x20[0][3]);
       } 
       else {
-         lcd.print(lcd_tabs_4x20[28][0]);
+         lcd.print(lcd_tabs_4x20[29][0]);
       }
     }
     else {
-      lcd.print(lcd_tabs_4x20[28][0]);      
+      lcd.print(lcd_tabs_4x20[29][0]);      
     }
   }
 
 }
 
 void Interface::beans_menu() {
+
+  for(int i = 0; i < 4; i++) {
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[10][2]);
+    }
+    else if(i == 1 && (millis() - forBlink) <= 600) {
+      if(gramas < 10) {
+
+      }
+      else if(gramas < 100) {
+
+      }
+      else if(gramas < 1000) {
+
+      }
+    }
+  }
 
 }
 
@@ -547,7 +564,7 @@ void Interface::list_menu() {
 
     lcd.setCursor(0, i);
     if( ( i == 3) && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     }
     else {
       lcd.print(lcd_tabs_4x20[17][i]);
@@ -563,7 +580,7 @@ void Interface::list_mode() {
 
     lcd.setCursor(0, i);
     if(i == 3 && (millis() - forBlink) >= 600) {
-      lcd.print(lcd_tabs_4x20[28][0]);
+      lcd.print(lcd_tabs_4x20[29][0]);
     } 
     else {
       lcd.print(lcd_tabs_4x20[index_list+18][i]);

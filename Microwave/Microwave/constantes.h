@@ -12,9 +12,16 @@
 #define BOUNCE_DURATION 40
 #define OFF 2
 #define TIMER 3
-#define OPEN 18
-#define ON 19
-#define LED 8
+#define LED_DOOR 4
+#define BUZZER 7
+#define LED_RED 8
+#define POWER_1 11
+#define POWER_2 12
+#define POWER_3 13
+#define ENGINE 40
+#define FAN 41
+#define ON 18
+#define OPEN 19
 
 const char DOIS_PONTOS = 58;
 const char BOLINHA = 165;
@@ -58,8 +65,8 @@ extern char lcd_tabs_4x15[7][4][15];
 extern char lcd_tabs_4x20[31][4][21];
 extern char lcd_clock[5][6];
 
-const byte PINOS_LINHAS[LINHAS] = {45, 44, 43, 42}; 
-const byte PINOS_COLUNAS[COLUNAS] = {41, 40, 39, 38}; 
+const byte PINOS_LINHAS[LINHAS] = {39, 38, 37, 36}; 
+const byte PINOS_COLUNAS[COLUNAS] = {35, 34, 33, 32}; 
 
 extern Keypad teclado_personalizado;
 
@@ -70,6 +77,7 @@ extern int old_state;
 extern char tecla;
 extern int index_easy_menu;
 extern int index_list;
+extern int gramas;
 
 extern volatile bool rising_on;
 extern volatile bool rising_off;

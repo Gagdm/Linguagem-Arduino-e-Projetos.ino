@@ -15,6 +15,7 @@ Controller controller;
 int state = TURN_OFF;
 int old_state = TURN_OFF;
 int index_list = 0;
+int gramas = 0;
 
 volatile bool rising_on = false;
 volatile bool rising_off = false;
@@ -35,17 +36,19 @@ int index_easy_menu = 0;
 
 void setup() {
   
+  Serial.begin(9600);
   pinMode(OPEN, INPUT_PULLUP);
   pinMode(TIMER, INPUT_PULLUP);
   pinMode(ON, INPUT_PULLUP);
   pinMode(OFF, INPUT_PULLUP);
-
-  pinMode(LED, OUTPUT);
+  pinMode(POWER_1, OUTPUT);
+  pinMode(POWER_2, OUTPUT);
+  pinMode(POWER_3, OUTPUT);
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_DOOR, OUTPUT);
 
   lcd.init();
 
-  Serial.begin(9600);
-  
   init_interruptions();
 
   rising_on = false;
@@ -57,6 +60,7 @@ void setup() {
 }
 
 void loop() {
+
   clock.microwave_clock();
 
   tecla = teclado_personalizado.getKey();
@@ -66,10 +70,10 @@ void loop() {
   }
   
   manager.state_manager();
-  Serial.println(clock.get_timerSeg());
   
   controller.task_manager();
+  controller.buzzer();
+
   interface.interface_manager();
-  
   
 }

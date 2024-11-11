@@ -1,10 +1,82 @@
 #include "controller.h"
 
-void Controller::Controller::block_microwave() {
+void Controller::leds() {
+
+  if((millis() - forLedPower) > 1600) {
+    forLedPower = millis();
+  }
+
+  if((millis() - forLedPower) <= 200) {
+    analogWrite(POWER_1, 255);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 400) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 600) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, 10);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 800) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 1000) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, HIGH);
+  }
+  else if((millis() - forLedPower) <= 1200) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 1400) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, 10);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
+  else if((millis() - forLedPower) <= 1600) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
+
+}
+
+void Controller::block_microwave() {
+
+  if(old_state == TURN_OFF || old_state == BLOCKED) {
+    analogWrite(POWER_1, LOW);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_3, LOW);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_DOOR, LOW);
+  }
 
   if((tecla) || something_pressed == true) {
     forBlocked = millis();
-    something_pressed = false;
   }
 
   if((millis() - forBlocked) > 90000) {
@@ -104,7 +176,22 @@ void Controller::easy_menu() {
 }
 
 void Controller::beans_menu() {
+  if(input == 0) {
+    gramas = 0;
+  }
 
+  switch(input) {
+    case 0:
+      gramas = (gramas + teclas) - 48;
+      break;
+    case 1:
+      gramas = (gramas*10) + (teclas - 48);
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+  }
 }
 
 void Controller::confirm_beans() {
@@ -148,30 +235,30 @@ void Controller::list_mode() {
 }
 
 Controller::Controller() {
+
   forBlocked = millis();
+  forLedPower = millis();
+  forBuzzer = millis();
+
 }
 
 void Controller::task_manager() {
 
   switch(state) {
 
-    /* 
+    
     case TURN_OFF: 
-      no action  
-    */ 
-
+      leds();
+      break;
     case INIT: 
       block_microwave();
       break;
     case INIT_HELP:
       block_microwave(); 
       break;
-      
-    /*
     case BLOCKED: 
-      no action
-    */
-    
+      leds();
+      break;
     case FIX_CLOCK: 
       fix_clock(); 
       break;
@@ -273,6 +360,22 @@ void Controller::task_manager() {
       list_mode(); 
       break;
       
+  }
+}
+
+ void Controller::buzzer() {
+  if(!mute) {
+    if((tecla) || something_pressed == true) {    
+      something_pressed = false;
+      forBuzzer = millis();
+    }
+
+    if((millis() - forBuzzer) < 120) {
+      tone(BUZZER, 3140);
+    } 
+    else {
+      noTone(BUZZER);
+    }
   }
 }
 

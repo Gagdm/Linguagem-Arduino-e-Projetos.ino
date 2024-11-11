@@ -313,7 +313,10 @@ int Manager::confirm_pizza() {
 
 int Manager::beans_menu() {
 
-    if(rising_on == true) return CONFIRM_BEANS;   
+    if(rising_on == true) {
+      controller.set_input(0);
+      return CONFIRM_BEANS;  
+    } 
     else if(rising_off == true) return EASY_MENU;
     else return BEANS_MENU;
     

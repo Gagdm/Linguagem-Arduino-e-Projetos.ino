@@ -7,8 +7,12 @@ class Controller {
   private:
 
     unsigned long forBlocked;
+    unsigned long forLedPower;
+    unsigned long forBuzzer;
 
     int input;
+
+    void leds();
 
     void block_microwave();
 
@@ -63,6 +67,8 @@ class Controller {
     void set_input(int value);
 
     int get_input();
+
+    void buzzer();
 
 };
 
