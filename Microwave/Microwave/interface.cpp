@@ -253,8 +253,93 @@ void Interface::fan_off() {
 }
 
 void Interface::thirty_seconds() {
-  /* hj */
+
+  if(old_state == INIT || old_state == INIT_HELP) {
+    for(int i = 0; i < 4; i++) {
+      lcd.setCursor(0,i);
+      lcd.print(lcd_tabs_4x20[29][i]);
+    }
+  }
   
+  for(int i = 0; i < 4; i++) {
+    if(i == 1) {
+      lcd.setCursor(7,1);
+      if(clock.get_timerMin() < 10) {
+        lcd.print("0");
+        lcd.print(clock.get_timerMin());
+      }
+      else {
+        lcd.print((clock.get_timerMin()/10));
+        lcd.print((clock.get_timerMin()%10));
+      }
+
+      lcd.print(DOIS_PONTOS);
+
+      if(clock.get_timerSeg() < 10) {
+        lcd.print("0");
+        lcd.print(clock.get_timerSeg());
+      }
+      else {
+        lcd.print((clock.get_timerSeg()/10));
+        lcd.print((clock.get_timerSeg()%10));
+      }
+    }
+    else if(i == 3 && (millis() - forBlink) <= 600) {
+      lcd.setCursor(0,3);
+      lcd.print(ARROW_LEFT);
+      lcd.print("Off");
+      
+      if(power == 0) {
+        lcd.setCursor(8,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("LOW");
+      }
+      else if(power == 1) {
+        lcd.setCursor(7,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("MEDIUM");
+      }
+      else if(power == 2) {
+        lcd.setCursor(7,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("HIGH");
+      }
+
+      lcd.setCursor(17,3);
+      lcd.print("On");
+      lcd.print(ARROW_RIGHT);
+    }
+    else if(i == 3) {
+      lcd.setCursor(0,3);
+      lcd.print("    ");
+      
+      if(power == 0) {
+        lcd.setCursor(8,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("LOW");
+      }
+      else if(power == 1) {
+        lcd.setCursor(7,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("MEDIUM");
+      }
+      else if(power == 2) {
+        lcd.setCursor(7,3);
+        lcd.print(P);
+        lcd.print(DOIS_PONTOS);
+        lcd.print("HIGH");
+      }
+
+      lcd.setCursor(17,3);
+      lcd.print("   ");
+    }
+  }
+
 }
 
 void Interface::choose_time() {
@@ -272,6 +357,7 @@ void Interface::power_menu() {
 void Interface::choose_power() {
 
   for(int i = 0; i < 4; i++) {
+    lcd.setCursor(0,i);
     lcd.print(lcd_tabs_4x20[2][i]);
   }
 
@@ -741,7 +827,7 @@ void Interface::confirm_chicken() {
       lcd.print(lcd_tabs_4x20[30][1]);
     }
     else if(i == 1) {
-      lcd.print(lcd_tabs_4x20[12][2])
+      lcd.print(lcd_tabs_4x20[12][2]);
     }
     else if(i == 2) {
        if(gramas < 10) {

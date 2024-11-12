@@ -30,7 +30,8 @@ const char BARRA = 124;
 const char NOT_SQUARE = 254;
 const char ARROW_RIGHT = 126;
 const char ARROW_LEFT = 127;
-const int EXCLAMATION = 33;
+const char EXCLAMATION = 33;
+const char P = 240;
 
 const byte LINHAS = 4; 
 const byte COLUNAS = 4;
@@ -79,6 +80,7 @@ extern char tecla;
 extern int index_easy_menu;
 extern int index_list;
 extern int gramas;
+extern int power;
 
 extern volatile bool rising_on;
 extern volatile bool rising_off;

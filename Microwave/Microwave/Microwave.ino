@@ -16,6 +16,7 @@ int state = TURN_OFF;
 int old_state = TURN_OFF;
 int index_list = 0;
 int gramas = 0;
+int power = 2;
 
 volatile bool rising_on = false;
 volatile bool rising_off = false;

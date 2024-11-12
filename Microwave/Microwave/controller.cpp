@@ -398,13 +398,13 @@ void Controller::task_manager() {
     case THAW_OFF: 
       thaw_off(); 
       break;
+
+    /*
     case LIST_MENU: 
-      list_menu(); 
-      break;
+      no action
     case LIST_MODE: 
-      list_mode(); 
-      break;
-      
+      bno action
+    */
   }
 }
 

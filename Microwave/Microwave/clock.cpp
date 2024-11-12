@@ -155,7 +155,6 @@ void Clock::show_time() {
 
     } 
   }
-
 }
   
 void Clock::fix_clock() {
