@@ -30,6 +30,7 @@ const char BARRA = 124;
 const char NOT_SQUARE = 254;
 const char ARROW_RIGHT = 126;
 const char ARROW_LEFT = 127;
+const int EXCLAMATION = 33;
 
 const byte LINHAS = 4; 
 const byte COLUNAS = 4;

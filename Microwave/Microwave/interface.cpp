@@ -556,7 +556,48 @@ void Interface::beans_menu() {
 
 void Interface::confirm_beans() {
 
+  for(int i = 0; i < 4; i++) {
+    lcd.setCursor(0, i);
 
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[30][1]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[10][2])
+    }
+    else if(i == 2) {
+       if(gramas < 10) {
+        lcd.print("        000");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 100) {
+        lcd.print("        00");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 1000) {
+        lcd.print("        0");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas >= 1000) {
+        lcd.print("        ");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+    }
+    else if(i == 3 && (millis() - forBlink) <= 600) {
+      lcd.print(lcd_tabs_4x20[0][3]);
+    }
+    else if(i == 3) {
+      lcd.print(lcd_tabs_4x20[29][0]);
+    }
+  }
 }
 
 void Interface::meat_menu() {
@@ -604,7 +645,48 @@ void Interface::meat_menu() {
 }
 
 void Interface::confirm_meat() {
+  for(int i = 0; i < 4; i++) {
+    lcd.setCursor(0, i);
 
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[30][1]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[11][2])
+    }
+    else if(i == 2) {
+       if(gramas < 10) {
+        lcd.print("        000");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 100) {
+        lcd.print("        00");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 1000) {
+        lcd.print("        0");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas >= 1000) {
+        lcd.print("        ");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+    }
+    else if(i == 3 && (millis() - forBlink) <= 600) {
+      lcd.print(lcd_tabs_4x20[0][3]);
+    }
+    else if(i == 3) {
+      lcd.print(lcd_tabs_4x20[29][0]);
+    }
+  }
 }
 
 void Interface::chicken_menu() {
@@ -652,7 +734,48 @@ void Interface::chicken_menu() {
 }
 
 void Interface::confirm_chicken() {
+  for(int i = 0; i < 4; i++) {
+    lcd.setCursor(0, i);
 
+    if(i == 0) {
+      lcd.print(lcd_tabs_4x20[30][1]);
+    }
+    else if(i == 1) {
+      lcd.print(lcd_tabs_4x20[12][2])
+    }
+    else if(i == 2) {
+       if(gramas < 10) {
+        lcd.print("        000");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 100) {
+        lcd.print("        00");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas < 1000) {
+        lcd.print("        0");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+      else if(gramas >= 1000) {
+        lcd.print("        ");
+        lcd.print(gramas);
+        lcd.print("g");
+        lcd.print("       ");
+      }
+    }
+    else if(i == 3 && (millis() - forBlink) <= 600) {
+      lcd.print(lcd_tabs_4x20[0][3]);
+    }
+    else if(i == 3) {
+      lcd.print(lcd_tabs_4x20[29][0]);
+    }
+  }
 }
 
 void Interface::thaw_on() {
