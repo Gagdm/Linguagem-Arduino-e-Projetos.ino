@@ -74,6 +74,7 @@ void loop() {
   
   controller.task_manager();
   controller.buzzer();
+  Serial.println(state);
 
   interface.interface_manager();
   

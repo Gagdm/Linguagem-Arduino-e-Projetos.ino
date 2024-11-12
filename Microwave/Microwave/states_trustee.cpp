@@ -3,7 +3,10 @@
 
 int Manager::turn_off() {
 
-  if(rising_on == true) return INIT;
+  if(rising_on == true) {
+    three_seconds = NO_PRESS;
+    return INIT;
+  }
   else return TURN_OFF;
     
 }
@@ -67,6 +70,7 @@ int Manager::blocked() {
 
     if((tecla == '*') || (press_open == true)) {
       time_over_blocked = false;
+      three_seconds = NO_PRESS;
       block = false;
       return INIT;
     }
@@ -77,10 +81,14 @@ int Manager::blocked() {
 int Manager::fix_clock() {
 
     if(rising_off == true) {
+      three_seconds = NO_PRESS;
       clock.set_clockHour();
       return INIT;
     }
-    else if(rising_on == true) return INIT;
+    else if(rising_on == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else return FIX_CLOCK;
 
 }
@@ -102,6 +110,7 @@ int Manager::timer() {
     if(rising_on == true || clock.get_timer_is_up() == true) {
       clock.set_ring(false);
       clock.set_timer_is_up(false);
+      three_seconds = NO_PRESS;
       return INIT;
     }
     else if(rising_off == true) return CHOOSE_TIMER;
@@ -125,6 +134,7 @@ int Manager::fan_on() {
 
     if(clock.get_timer_is_up() == true) {
       clock.set_timer_is_up(false);
+      three_seconds = NO_PRESS;
       return INIT;
     }
     else if((rising_off == true) || (press_open == true)) return FAN_OFF;
@@ -146,7 +156,10 @@ int Manager::fan_off() {
 int Manager::thirty_seconds() {
 
     if(rising_on == true) return COOKING;
-    else if(rising_off == true) return INIT;
+    else if(rising_off == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else if(tecla == 'C') return POWER_MENU;
     else return THIRTY_SECONDS;
 
@@ -155,7 +168,10 @@ int Manager::thirty_seconds() {
 int Manager::choose_time() {
 
     if(rising_on == true) return COOKING;
-    else if(rising_off == true) return INIT;
+    else if(rising_off == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else if(tecla == 'C') return POWER_MENU;
     else return CHOOSE_TIME;
 
@@ -172,7 +188,18 @@ int Manager::power_menu() {
 int Manager::choose_power() {
 
     if(rising_off == true) return POWER_MENU;
-    else if(tecla >= '0' && tecla <= '9') return CHOOSE_TIME;
+    else if(tecla == '1') {
+      power = 0;
+      return CHOOSE_TIME;
+    }
+    else if(tecla == '2') {
+      power = 1;
+      return CHOOSE_TIME;
+    }
+    else if(tecla == '3') {
+      power = 2;
+      return CHOOSE_TIME;
+    }
     else return CHOOSE_POWER;
 
 }
@@ -181,16 +208,20 @@ int Manager::cooking() {
 
     if(clock.get_timer_is_up() == true) {
       clock.set_timer_is_up(false);
+      three_seconds = NO_PRESS;
       return INIT;
     }
-    else if((rising_off == true) && (press_open == true)) return STOPPED_COOKING;
+    else if((rising_off == true) || (press_open == true)) return STOPPED_COOKING;
     else return COOKING;
 
 }
 
 int Manager::stopped_cooking() {
 
-    if(rising_off == true) return INIT;
+    if(rising_off == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else if((rising_on == true) && (press_open == false)) return COOKING;
     else return STOPPED_COOKING;
 
@@ -198,7 +229,10 @@ int Manager::stopped_cooking() {
 
 int Manager::easy_menu() {
 
-    if(rising_off == true) return INIT;
+    if(rising_off == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else if((rising_on == true) && (index_easy_menu == 0)) return POPCORN_MENU;
     else if((rising_on == true) && (index_easy_menu == 1)) return CONFIRM_MUGCAKE;
     else if((rising_on == true) && (index_easy_menu == 2)) return CONFIRM_OMELET;
@@ -372,6 +406,7 @@ int Manager::thaw_on() {
 
     if( clock.get_timer_is_up() == true) {
       clock.set_timer_is_up(false);
+      three_seconds = NO_PRESS;
       return INIT;
     }
     else if(/* test == false ||*/ (press_open == true) || (rising_off == true)) return THAW_OFF;
@@ -381,7 +416,10 @@ int Manager::thaw_on() {
 
 int Manager::thaw_off() {
 
-    if(rising_off == false) return INIT;
+    if(rising_off == false) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else if((press_open == false) && ((rising_on == true) || clock.get_timer_is_up() == true)) {
       clock.set_timer_is_up(false);
       return THAW_ON;

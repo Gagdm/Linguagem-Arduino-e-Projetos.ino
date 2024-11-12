@@ -136,13 +136,8 @@ void Controller::fan_on() {
 
 void Controller::thirty_seconds() {
 
-  if(rising_on == true) {
-    clock.set_timerSeg(clock.get_timerSeg() + 30);
-  }
-
-  if(clock.get_timerSeg() == 60) {
-    clock.set_timerSeg(0);
-    clock.set_timerMin(clock.get_timerMin() + 1);
+  if(old_state != THIRTY_SECONDS) {
+    clock.set_timerSeg(30);
   }
 
 }
@@ -151,15 +146,9 @@ void Controller::choose_time() {
 
 }
 
-void Controller::power_menu() {
-
-}
-
-void Controller::choose_power() {
-
-}
-
 void Controller::cooking() {
+
+  clock.microwave_timer();
 
 }
 
@@ -335,12 +324,14 @@ void Controller::task_manager() {
       choose_time(); 
       break;
 
+    /*
     case POWER_MENU: 
       power_menu(); 
       break;
     case CHOOSE_POWER: 
       choose_power(); 
       break;
+    */
 
     case COOKING: 
       cooking(); 
