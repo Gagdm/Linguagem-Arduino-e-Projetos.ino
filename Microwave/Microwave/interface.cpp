@@ -482,6 +482,36 @@ void Interface::cooking() {
 
 void Interface::stopped_cooking() {
 
+  if(press_open == false) {
+
+    for(int i = 0; i < 4; i++) {
+      lcd.setCursor(0,i);
+      if(i == 0 || i == 1 || i == 2) {
+        lcd.print(lcd_tabs_4x20[28][i+1]);
+      }
+      else if(i == 3 && (millis() - forBlink) <= 600) {
+        lcd.print(lcd_tabs_4x20[0][3]);
+      }
+      else if(i == 3) {
+        lcd.print(lcd_tabs_4x20[29][0]);
+      }
+    }
+
+  }
+  else {
+
+    for(int i = 0; i < 4; i++) {
+      lcd.setCursor(0,i);
+      if(i == 0) {
+        lcd.print(lcd_tabs_4x20[30][0]);
+      }
+      else {
+        lcd.print(lcd_tabs_4x20[28][i]);
+      }
+    }
+
+  }
+
 }
 
 void Interface::easy_menu() {
