@@ -47,7 +47,10 @@ int Manager::init_help() {
     else if(rising_on == true) return THIRTY_SECONDS;
     else if(tecla == 'A') return EASY_MENU;
     else if(tecla == 'B') return FAN_MENU;
-    else if((tecla >= '0') && (tecla <= '9')) return CHOOSE_TIME;
+    else if((tecla >= '0') && (tecla <= '9')){
+      controller.set_input(0);
+      return CHOOSE_TIME;
+    }
     else if(tecla == '*' || (time_over_blocked == true))  {
       block = true;
       return BLOCKED;
@@ -100,7 +103,10 @@ int Manager::choose_timer() {
       clock.reset_millisTimer();
       return TIMEr_E;
     }
-    else if(rising_off == true) return INIT;
+    else if(rising_off == true) {
+      three_seconds = NO_PRESS;
+      return INIT;
+    }
     else return CHOOSE_TIMER;
 
 }

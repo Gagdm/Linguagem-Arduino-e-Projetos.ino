@@ -17,9 +17,8 @@ void init_interruptions() {
 /* Se forem de LOW para HIGH, foram apertados */
 void on_up() {
 
-  something_pressed = true;
-
   if(millis() > bounceTime_ON) {
+    something_pressed = true;
     rising_on = true;
     bounceTime_ON = millis() + BOUNCE_DURATION;
   }
@@ -28,9 +27,8 @@ void on_up() {
 
 void off_up() {
 
-  something_pressed = true;
-
   if(millis() > bounceTime_OFF) {
+    something_pressed = true;
     rising_off = true;
     bounceTime_OFF = millis() + BOUNCE_DURATION;
   }

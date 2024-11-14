@@ -136,7 +136,24 @@ void Controller::fan_on() {
 
 void Controller::thirty_seconds() {
 
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
+
   if(old_state != THIRTY_SECONDS) {
+    clock.set_timerMin(0);
     clock.set_timerSeg(30);
   }
 
@@ -144,15 +161,63 @@ void Controller::thirty_seconds() {
 
 void Controller::choose_time() {
 
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
+
 }
 
 void Controller::cooking() {
+
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
 
   clock.microwave_timer();
 
 }
 
 void Controller::stopped_cooking() {
+
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
 
 }
 
@@ -250,9 +315,41 @@ void Controller::confirm_chicken() {
 
 void Controller::thaw_on() {
 
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
+
 }
 
 void Controller::thaw_off() {
+
+  if(power == 0) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, LOW);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 1) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, LOW);
+  }
+  else if(power == 2) {
+    analogWrite(POWER_3, 10);
+    analogWrite(POWER_2, 80);
+    analogWrite(POWER_1, 255);
+  }
 
 }
 

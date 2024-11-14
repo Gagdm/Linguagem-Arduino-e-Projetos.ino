@@ -70,11 +70,27 @@ void loop() {
     mute = !mute;
   }
   
+  if(state != TURN_OFF) {
+    if(press_open == true) {
+      digitalWrite(LED_DOOR, HIGH);
+    }
+    else {
+      digitalWrite(LED_DOOR, LOW);
+    }
+  }
+
+  if(state == COOKING || state == THAW_ON) {
+    digitalWrite(LED_RED, HIGH);
+  }
+  else {
+    digitalWrite(LED_RED, LOW);
+  }
+
   manager.state_manager();
   
   controller.task_manager();
   controller.buzzer();
-  Serial.println(state);
+  Serial.println(power);
 
   interface.interface_manager();
   
