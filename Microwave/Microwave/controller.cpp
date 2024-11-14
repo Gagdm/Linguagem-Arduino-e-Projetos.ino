@@ -67,15 +67,14 @@ void Controller::leds() {
 
 void Controller::block_microwave() {
 
-  if(old_state == TURN_OFF || old_state == BLOCKED) {
+  if(old_state != TURN_OFF || old_state != BLOCKED) {
     analogWrite(POWER_1, LOW);
     analogWrite(POWER_2, LOW);
     analogWrite(POWER_3, LOW);
     digitalWrite(LED_RED, LOW);
-    digitalWrite(LED_DOOR, LOW);
   }
 
-  if((tecla) || something_pressed == true || (state != INIT && state != INIT_HELP)) {
+  if((tecla) || something_pressed == true || (old_state != INIT && old_state != INIT_HELP)) {
     forBlocked = millis();
   }
 
@@ -157,6 +156,7 @@ void Controller::thirty_seconds() {
     clock.set_timerSeg(30);
   }
 
+  input = 4;
 }
 
 void Controller::choose_time() {
@@ -175,6 +175,33 @@ void Controller::choose_time() {
     analogWrite(POWER_3, 10);
     analogWrite(POWER_2, 80);
     analogWrite(POWER_1, 255);
+  }
+
+   if(input == 0) {
+    clock.set_timerSeg(0);
+    clock.set_timerMin(0);    
+  }
+
+  if(tecla >= '0' && tecla <= '9') {
+    input++;
+
+    switch(input) {
+      case 1:
+        clock.set_timerMin(tecla-48);
+        break;
+
+      case 2:
+        clock.set_timerMin(((clock.get_timerMin()*10)+(tecla-48))%60);
+        break;
+
+      case 3: 
+        clock.set_timerSeg(tecla-48);
+        break;
+
+      case 4: 
+        clock.set_timerSeg(((clock.get_timerSeg()*10)+(tecla-48))%60);
+        break;
+    }
   }
 
 }
@@ -370,6 +397,8 @@ Controller::Controller() {
   forBlocked = millis();
   forLedPower = millis();
   forBuzzer = millis();
+  forBuzz = millis() + 3004;
+  rin = false;
 
 }
 
@@ -498,16 +527,46 @@ void Controller::task_manager() {
 
  void Controller::buzzer() {
   if(!mute) {
+
+    if(clock.get_ring() == true) {
+      clock.set_ring(false);
+      forBuzz = millis();
+    }
+
     if((tecla) || something_pressed == true) {    
       something_pressed = false;
       forBuzzer = millis();
     }
 
-    if((millis() - forBuzzer) < 120) {
+    if((millis() - forBuzzer) <= 120) {
       tone(BUZZER, 3140);
     } 
-    else {
+    else if((millis() - forBuzzer) < 300) {
       noTone(BUZZER);
+    }
+
+    if(state == COOKING || state == THAW_ON || state == FAN_ON || state == TIMEr_E) {
+      if((millis() - forBuzz) <= 50) {
+        noTone(BUZZER);
+      }
+      else if((millis() - forBuzz) <= 300) {
+        tone(BUZZER, 3140);
+      }
+      else if((millis() - forBuzz) <= 1000) {
+        noTone(BUZZER);
+      }
+      else if((millis() - forBuzz) <= 1300) {
+        tone(BUZZER, 3140);
+      }
+      else if((millis() - forBuzz) <= 2000) {
+        noTone(BUZZER);
+      }
+      else if((millis() - forBuzz) <= 2300) {
+        tone(BUZZER, 3140);
+      }
+      else if((millis() - forBuzz) > 2300 && (millis() - forBuzzer) > 120) {
+        noTone(BUZZER);
+      }
     }
   }
 }
@@ -520,4 +579,8 @@ void Controller::set_input(int value) {
 
  int Controller::get_input() {
    return input;
+ }
+
+unsigned long Controller::get_forBuzz() {
+   return forBuzz;
  }

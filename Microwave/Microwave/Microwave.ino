@@ -70,6 +70,13 @@ void loop() {
     mute = !mute;
   }
   
+  manager.state_manager();
+  
+  controller.task_manager();
+  interface.interface_manager();
+  Serial.println(press_open);
+  controller.buzzer();
+
   if(state != TURN_OFF) {
     if(press_open == true) {
       digitalWrite(LED_DOOR, HIGH);
@@ -78,20 +85,21 @@ void loop() {
       digitalWrite(LED_DOOR, LOW);
     }
   }
+  
+  if(state == FAN_ON) {
+    digitalWrite(FAN, HIGH);
+  }
+  else {
+    digitalWrite(FAN, LOW);
+  }
 
   if(state == COOKING || state == THAW_ON) {
     digitalWrite(LED_RED, HIGH);
+    digitalWrite(ENGINE, HIGH);
   }
   else {
     digitalWrite(LED_RED, LOW);
+    digitalWrite(ENGINE, LOW);
   }
 
-  manager.state_manager();
-  
-  controller.task_manager();
-  controller.buzzer();
-  Serial.println(power);
-
-  interface.interface_manager();
-  
 }

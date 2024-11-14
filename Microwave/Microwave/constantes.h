@@ -9,7 +9,7 @@
 #include <string.h>
 #include "clock.h"
 
-#define BOUNCE_DURATION 40
+#define BOUNCE_DURATION 100
 #define OFF 2
 #define TIMER 3
 #define LED_DOOR 4

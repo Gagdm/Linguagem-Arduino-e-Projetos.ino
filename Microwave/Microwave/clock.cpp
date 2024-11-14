@@ -18,7 +18,7 @@ Clock::Clock() {
     millisTimer = millis();
     forBlink = millis();
 
-    timerSeg = 0;
+    timerSeg = -3;
     timerMin = 0;
 
     timer_is_up = false;
@@ -52,7 +52,6 @@ void Clock::microwave_clock() {
 void Clock::microwave_timer() {
 
     if(timerSeg == -3) {
-      ring = false;
       timer_is_up = true;
     }
     
@@ -65,7 +64,7 @@ void Clock::microwave_timer() {
       timerSeg = 59;
       timerMin--;
     }
-    else if(timerSeg <= 0 && timerMin == 0) {
+    else if(timerSeg == 0 && timerMin == 0) {
       ring = true;
     }
 
@@ -288,7 +287,7 @@ void Clock::show_timer() {
 
   }
 
-  if(ring == false) {
+  if(timerSeg >= 0) {
 
     if(timerMin < 10) {
 
@@ -318,15 +317,17 @@ void Clock::show_timer() {
 
     }
 
+    lcd_tabs_4x20[28][2][12] = 's';
+
   }
-  else if(ring == true && (millis() - forBlink) >= 600) {
+  else if(timerSeg <= 0 && (millis() - forBlink) >= 600) {
 
     lcd_tabs_4x20[28][2][7] = ' ';
     lcd_tabs_4x20[28][2][8] = ' ';
     lcd_tabs_4x20[28][2][9] = ' ';
     lcd_tabs_4x20[28][2][10] = ' ';
     lcd_tabs_4x20[28][2][11] = ' ';
-
+    lcd_tabs_4x20[28][2][12] = ' ';
   }
   else {
 
@@ -336,6 +337,7 @@ void Clock::show_timer() {
     lcd_tabs_4x20[28][2][9] = ':';
     lcd_tabs_4x20[28][2][10] = '0';
     lcd_tabs_4x20[28][2][11] = '0';
+    lcd_tabs_4x20[28][2][12] = 's';
 
   }
 

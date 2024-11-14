@@ -9,8 +9,10 @@ class Controller {
     unsigned long forBlocked;
     unsigned long forLedPower;
     unsigned long forBuzzer;
+    unsigned long forBuzz;
 
     int input;
+    int rin;
 
     void leds();
 
@@ -69,6 +71,8 @@ class Controller {
     int get_input();
 
     void buzzer();
+
+    unsigned long get_forBuzz();
 
 };
 

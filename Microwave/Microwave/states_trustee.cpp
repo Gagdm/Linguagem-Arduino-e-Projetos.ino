@@ -114,7 +114,6 @@ int Manager::choose_timer() {
 int Manager::timer() {
 
     if(rising_on == true || clock.get_timer_is_up() == true) {
-      clock.set_ring(false);
       clock.set_timer_is_up(false);
       three_seconds = NO_PRESS;
       return INIT;
@@ -143,6 +142,9 @@ int Manager::fan_on() {
       three_seconds = NO_PRESS;
       return INIT;
     }
+    else if((rising_off == true) && (clock.get_timerSeg() <= 0 && clock.get_timerMin() == 0)) {
+      return INIT;
+    }
     else if((rising_off == true) || (press_open == true)) return FAN_OFF;
     else return FAN_ON;
 
@@ -161,7 +163,10 @@ int Manager::fan_off() {
 
 int Manager::thirty_seconds() {
 
-    if(rising_on == true) return COOKING;
+    if(rising_on == true) {
+      clock.reset_millisTimer();
+      return COOKING;
+    }
     else if(rising_off == true) {
       three_seconds = NO_PRESS;
       return INIT;
@@ -173,7 +178,10 @@ int Manager::thirty_seconds() {
 
 int Manager::choose_time() {
 
-    if(rising_on == true) return COOKING;
+    if(rising_on == true) {
+      clock.reset_millisTimer();
+      return COOKING;
+    }
     else if(rising_off == true) {
       three_seconds = NO_PRESS;
       return INIT;
@@ -212,9 +220,22 @@ int Manager::choose_power() {
 
 int Manager::cooking() {
 
+    if(rising_on == true) {
+      if(clock.get_timerSeg() + 30 < 60) {
+        clock.set_timerSeg(clock.get_timerSeg() + 30);
+      }
+      else {
+        clock.set_timerSeg((clock.get_timerSeg() + 30)%60);
+        clock.set_timerMin((clock.get_timerMin() + 1)%99);
+      }
+    }
+
     if(clock.get_timer_is_up() == true) {
       clock.set_timer_is_up(false);
       three_seconds = NO_PRESS;
+      return INIT;
+    }
+    else if((rising_off == true) && (clock.get_timerSeg() <= 0 && clock.get_timerMin() == 0)) {
       return INIT;
     }
     else if((rising_off == true) || (press_open == true)) return STOPPED_COOKING;
@@ -228,7 +249,10 @@ int Manager::stopped_cooking() {
       three_seconds = NO_PRESS;
       return INIT;
     }
-    else if((rising_on == true) && (press_open == false)) return COOKING;
+    else if((rising_on == true) && (press_open == false)) {
+      clock.reset_millisTimer();
+      return COOKING;
+    }
     else return STOPPED_COOKING;
 
 }
